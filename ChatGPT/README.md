@@ -128,35 +128,27 @@ You can modify these parameters in the code to experiment with different scenari
 
 To adjust the simulation parameters or behavior:
 
-    Change Simulation Time:
+### Change Simulation Time:
 
-    In main.cpp, modify the SIMULATION_TIME constant.
+In main.cpp, modify the SIMULATION_TIME constant.
 
-    cpp
+    #define SIMULATION_TIME 10000  // Adjust as needed
 
-#define SIMULATION_TIME 10000  // Adjust as needed
-
-Adjust Packet Arrival Rate:
+### Adjust Packet Arrival Rate:
 
 In the generate_traffic function, modify the arrival_dist probability.
 
-cpp
+    bernoulli_distribution arrival_dist(0.5); // Adjust arrival rate (0.0 to 1.0)
 
-bernoulli_distribution arrival_dist(0.5); // Adjust arrival rate (0.0 to 1.0)
-
-Change Buffer Size:
+### Change Buffer Size:
 
 In port.h, modify the BUFFER_SIZE constant.
 
-cpp
+    #define BUFFER_SIZE 64  // Adjust buffer size
 
-#define BUFFER_SIZE 64  // Adjust buffer size
-
-Modify Weights in WFQ:
+### Modify Weights in WFQ:
 
 In WFQScheduler::schedule, adjust the weight array to assign different weights to ports.
-
-cpp
 
     weight[i] = 1.0; // Assign weights to ports
 
