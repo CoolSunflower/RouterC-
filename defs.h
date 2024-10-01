@@ -35,6 +35,7 @@ typedef std::queue<Packet> inputQueue;
 typedef std::queue<Packet> outputQueue;
 
 class Router{
+private:
     inputQueue input[NUM_QUEUES];
     outputQueue output[NUM_QUEUES];
 

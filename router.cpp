@@ -26,7 +26,7 @@
         - Simple round-robin scheduler DONE
         - Add metrics support:
             - return value in sendToQueue to symbolize if packet dropped
-        - Abstract Queues, behind a seperate class with a fixed capacity
+        - Abstract Queues, behind a seperate class with a fixed capacity, needed to simulate limited buffer size
         - Different types of traffic: can simulate using if checks and sleep times
         - ...
 */
