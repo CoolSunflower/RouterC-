@@ -6,7 +6,7 @@
 
 // Defines
 #define NUM_QUEUES 8
-#define SIMULATION_TIME 5
+#define SIMULATION_TIME 10
 
 // Classes & Typedefs
 class Packet{
@@ -51,6 +51,8 @@ public:
 
 // Utility Functions
 void updateTime();
+void printTransmitted();
+
 // The below 2 functions simulate the link layer
 void sendToQueue(Router*, int);
 void removeFromQueue(Router*, int);

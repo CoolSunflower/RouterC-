@@ -16,6 +16,22 @@
 
     Only 2 priorities: High/Low
     Different Input Queues receive different types of traffic: [high priority/ low priority] [bursty/constant]
+
+    Development Phases and TODOs:
+
+    P1: Round Robin Scheduling without Metrics DONE
+        Current Flow:
+            Packets sent async by sendToQueue 
+            Packets retreived from inputQueue and sent to correct outputQueue by scheduler
+            Packets removed async by removeFromQueue
+            All transmitted packets stored in an array and printed at end
+
+    P2: Add support for Buffers, Metrics
+
+    P3: Priority and Weighted Fair Scheduling Algorithms
+
+    P4: iSlip Algorithm
+
     TODO:
         - Input Queues with locks: DONE
             - Send to input queue with sleep for each router input port DONE
@@ -29,6 +45,7 @@
         - Abstract Queues, behind a seperate class with a fixed capacity, needed to simulate limited buffer size
         - Different types of traffic: can simulate using if checks and sleep times
         - ...
+        - do I really need a pid?
 */
 
 // Includes
@@ -48,6 +65,7 @@ mutex outputMutex[8];    // Output queue mutexes <-- will be used when scheduler
 std::atomic<bool> stop_threads(false);
 int pid = 0;             // packet id's
 mutex pidMutex;
+vector<Packet> transmitted; // All packets successfully transmitted
 
 int main(int argc, char* argv[]){
     // Seperate thread for managing time
@@ -93,14 +111,9 @@ int main(int argc, char* argv[]){
     stop_threads.store(true);
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    return 0;
-}
+    printTransmitted();
 
-void updateTime(){
-    while(!stop_threads.load()) {
-        routerTime++;
-        this_thread::sleep_for(chrono::seconds(1));
-    }
+    return 0;
 }
 
 void sendToQueue(Router * router, int inputQueueNumber){
@@ -115,6 +128,7 @@ void sendToQueue(Router * router, int inputQueueNumber){
     
         // Sleep for 100-1000 ms before sending another packet to this queue
         this_thread::sleep_for(chrono::milliseconds(100 + ( std::rand() % ( 1000 - 100 + 1 ) ))); 
+        // need to modify this logic to simulate different traffic patterns
     }
 }
 
@@ -129,6 +143,7 @@ void removeFromQueue(Router * router, int outputQueueNumber){
 void RoundRobinScheduler(Router *router){
     // all it does is iterates thruogh the input queues, takes one and sends it to the output queues with waits in between
     int currQueue = 0;
+    this_thread::sleep_for(chrono::seconds(1));
     while(!stop_threads.load()){
         // Get packet from Router Current Input Queue
         Packet* pkt = router->removeFromInputQueue(currQueue);
@@ -159,6 +174,8 @@ void Router::removeFromOutputQueue(int outputQueueNumber){
     this->output[outputQueueNumber].pop();
     pkt.sentTime = routerTime;
     outputMutex[outputQueueNumber].unlock();
+
+    transmitted.push_back(pkt);
 }
 
 Packet* Router::removeFromInputQueue(int inputQueueNumber){
@@ -177,4 +194,20 @@ int Router::sendToOutputQueue(int outputQueueNumber, Packet* pkt){
     this->output[outputQueueNumber].push(*pkt);
     outputMutex[outputQueueNumber].unlock();
     return 0;
+}
+
+ostream &operator<<(ostream &os, Packet const &pkt) { 
+    return os << pkt.id << "\t: " << pkt.inputPort << " --> " << pkt.outputPort << "\t: " << pkt.arrivalTime << " --> " << pkt.sentTime << "\n";
+}
+
+void updateTime(){
+    while(!stop_threads.load()) {
+        routerTime++;
+        this_thread::sleep_for(chrono::seconds(1));
+    }
+}
+
+void printTransmitted(){
+    for(auto pkt: transmitted)
+        cout << pkt;
 }
