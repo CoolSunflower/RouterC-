@@ -1,7 +1,7 @@
 # Makefile for Router Simulation
 
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall
+CXXFLAGS = -std=c++11
 
 OBJS = main.o port.o scheduler.o
 
