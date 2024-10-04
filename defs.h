@@ -2,11 +2,13 @@
 #define DEFS_H_
 
 // Includes
+#include <pthread.h>
 #include <queue>
 
 // Defines
 #define NUM_QUEUES 8
-#define SIMULATION_TIME 10
+#define SIMULATION_TIME 5
+#define BUFFER_CAPACITY 64
 
 // Classes & Typedefs
 class Packet{
@@ -31,13 +33,29 @@ public:
     }
 };
 
-typedef std::queue<Packet> inputQueue;
-typedef std::queue<Packet> outputQueue;
+class Buffer{
+    int capacity = BUFFER_CAPACITY;
+    int size = 0;
+    std::queue<Packet> bufferQueue;
+
+public:
+    int push(Packet*);
+    Packet pop();
+    inline bool full() const {
+        return size == capacity;
+    }
+    inline bool empty() const {
+        return size == 0;
+    }
+};
 
 class Router{
 private:
-    inputQueue input[NUM_QUEUES];
-    outputQueue output[NUM_QUEUES];
+    // Buffer input[NUM_QUEUES];
+    // Buffer output[NUM_QUEUES];
+
+    std::queue<Packet> input[NUM_QUEUES];
+    std::queue<Packet> output[NUM_QUEUES];
 
 public:
     // Link layer functions
@@ -58,6 +76,7 @@ void sendToQueue(Router*, int);
 void removeFromQueue(Router*, int);
 
 // Scheduler Function
+// void PriorityScheduler(Router*);
 void RoundRobinScheduler(Router*);
 
 #endif //DEFS_H_

@@ -26,7 +26,7 @@
             Packets removed async by removeFromQueue
             All transmitted packets stored in an array and printed at end
 
-    P2: Add support for Buffers, Metrics
+    P2: Add support for Buffers, Metrics, Flow Types
 
     P3: Priority and Weighted Fair Scheduling Algorithms
 
@@ -40,15 +40,22 @@
         - Separate threads layout for sending packets DONE
         - Separate threads for clearing output queues at a fixed rate DONE
         - Simple round-robin scheduler DONE
+
+        - Queues --> Buffers Everywhere
+        - Metric Support
+        - Input Flow Types
+
         - Add metrics support:
             - return value in sendToQueue to symbolize if packet dropped
         - Abstract Queues, behind a seperate class with a fixed capacity, needed to simulate limited buffer size
+
         - Different types of traffic: can simulate using if checks and sleep times
         - ...
         - do I really need a pid?
 */
 
 // Includes
+// #include <cstddef>
 #include <thread>
 #include <chrono>
 #include <mutex>
@@ -89,7 +96,7 @@ int main(int argc, char* argv[]){
     for(int i = 0; i < NUM_QUEUES; i++)
         OutputQueueRemover[i].detach();
 
-    // Detach Scheduler thread
+    // Create & Detach appropriate Scheduler thread
     int scheduler_choice;
     cout << "Select Scheduler:\n1. Priority Scheduling\n2. Weighted Fair Queuing\n3. Round Robin\n4. iSLIP\n";
     cin >> scheduler_choice;
@@ -102,8 +109,9 @@ int main(int argc, char* argv[]){
         scheduler.detach();
     }else if(scheduler_choice == 4){
         cout << "wait\n";
-    }else if(scheduler_choice == 5){
-        cout << "wait\n";
+    }else{
+        cout << "Invalid Choice. Exiting...\n";
+        return 1;
     }
 
     // Sleep for some time and then kill all threads
@@ -115,30 +123,6 @@ int main(int argc, char* argv[]){
 
     return 0;
 }
-
-void sendToQueue(Router * router, int inputQueueNumber){
-    while(!stop_threads.load()){
-        // Creating Packet
-        pidMutex.lock();
-        Packet pkt = Packet(pid++, rand()%2, routerTime, inputQueueNumber, rand()%8);
-        pidMutex.unlock();
-
-        // Push to Router
-        router->addToInputQueue(inputQueueNumber, &pkt);
-    
-        // Sleep for 100-1000 ms before sending another packet to this queue
-        this_thread::sleep_for(chrono::milliseconds(100 + ( std::rand() % ( 1000 - 100 + 1 ) ))); 
-        // need to modify this logic to simulate different traffic patterns
-    }
-}
-
-void removeFromQueue(Router * router, int outputQueueNumber){
-    while(!stop_threads.load()){
-        router->removeFromOutputQueue(outputQueueNumber);
-        this_thread::sleep_for(chrono::milliseconds(500));
-    }
-}
-
 
 void RoundRobinScheduler(Router *router){
     // all it does is iterates thruogh the input queues, takes one and sends it to the output queues with waits in between
@@ -159,10 +143,55 @@ void RoundRobinScheduler(Router *router){
     }
 }
 
+void sendToQueue(Router * router, int inputQueueNumber){
+    while(!stop_threads.load()){
+        // Creating Packet
+        pidMutex.lock();
+        Packet pkt = Packet(++pid, rand()%2, routerTime, inputQueueNumber, rand()%8);
+        pidMutex.unlock();
+
+        // Push to Router
+        router->addToInputQueue(inputQueueNumber, &pkt);
+    
+        // Sleep for 100-1000 ms before sending another packet to this queue
+        this_thread::sleep_for(chrono::milliseconds(100 + ( std::rand() % ( 1000 - 100 + 1 ) ))); 
+        // need to modify this logic to simulate different traffic patterns
+    }
+}
+
+void removeFromQueue(Router * router, int outputQueueNumber){
+    while(!stop_threads.load()){
+        router->removeFromOutputQueue(outputQueueNumber);
+        this_thread::sleep_for(chrono::milliseconds(500));
+    }
+}
+
+int Buffer::push(Packet* pkt){
+    if(this->full()) return 0;    
+    this->bufferQueue.push(*pkt);
+    this->size += 1;
+    return pkt->id;
+}
+
+Packet Buffer::pop(){
+    Packet front = this->bufferQueue.front();
+    this->bufferQueue.pop();
+    return front;
+}
+
 int Router::addToInputQueue(int inputQueueNumber, Packet* pkt){
     inputMutex[inputQueueNumber].lock();
+    // int ret = this->input[inputQueueNumber].push(pkt);
     this->input[inputQueueNumber].push(*pkt);
     inputMutex[inputQueueNumber].unlock();
+    return 0;
+}
+
+int Router::sendToOutputQueue(int outputQueueNumber, Packet* pkt){
+    outputMutex[outputQueueNumber].lock();
+    // int ret = this->output[outputQueueNumber].push(pkt);
+    this->output[outputQueueNumber].push(*pkt);
+    outputMutex[outputQueueNumber].unlock();
     return 0;
 }
 
@@ -176,6 +205,7 @@ void Router::removeFromOutputQueue(int outputQueueNumber){
     outputMutex[outputQueueNumber].unlock();
 
     transmitted.push_back(pkt);
+    // Packet pkt = this->output[outputQueueNumber].pop();
 }
 
 Packet* Router::removeFromInputQueue(int inputQueueNumber){
@@ -189,12 +219,6 @@ Packet* Router::removeFromInputQueue(int inputQueueNumber){
     return pkt;
 }
 
-int Router::sendToOutputQueue(int outputQueueNumber, Packet* pkt){
-    outputMutex[outputQueueNumber].lock();
-    this->output[outputQueueNumber].push(*pkt);
-    outputMutex[outputQueueNumber].unlock();
-    return 0;
-}
 
 ostream &operator<<(ostream &os, Packet const &pkt) { 
     return os << pkt.id << "\t: " << pkt.inputPort << " --> " << pkt.outputPort << "\t: " << pkt.arrivalTime << " --> " << pkt.sentTime << "\n";
