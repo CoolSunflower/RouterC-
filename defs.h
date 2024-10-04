@@ -7,7 +7,7 @@
 
 // Defines
 #define NUM_QUEUES 8
-#define SIMULATION_TIME 5
+#define SIMULATION_TIME 15
 #define BUFFER_CAPACITY 64
 
 // Classes & Typedefs
@@ -39,8 +39,9 @@ class Buffer{
     std::queue<Packet> bufferQueue;
 
 public:
-    int push(Packet*);
-    Packet pop();
+    int push(Packet);
+    void pop();
+    Packet front();
     inline bool full() const {
         return size == capacity;
     }
@@ -51,11 +52,11 @@ public:
 
 class Router{
 private:
-    // Buffer input[NUM_QUEUES];
-    // Buffer output[NUM_QUEUES];
+    Buffer input[NUM_QUEUES];
+    Buffer output[NUM_QUEUES];
 
-    std::queue<Packet> input[NUM_QUEUES];
-    std::queue<Packet> output[NUM_QUEUES];
+    // std::queue<Packet> input[NUM_QUEUES];
+    // std::queue<Packet> output[NUM_QUEUES];
 
 public:
     // Link layer functions

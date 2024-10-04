@@ -166,17 +166,20 @@ void removeFromQueue(Router * router, int outputQueueNumber){
     }
 }
 
-int Buffer::push(Packet* pkt){
-    if(this->full()) return 0;    
-    this->bufferQueue.push(*pkt);
+int Buffer::push(Packet pkt){
+    if(this->full()) return 0;
+    this->bufferQueue.push(pkt);
     this->size += 1;
-    return pkt->id;
+    return pkt.id;
 }
 
-Packet Buffer::pop(){
-    Packet front = this->bufferQueue.front();
+void Buffer::pop(){
     this->bufferQueue.pop();
-    return front;
+    this->size -= 1;
+}
+
+Packet Buffer::front(){
+    return this->bufferQueue.front();
 }
 
 int Router::addToInputQueue(int inputQueueNumber, Packet* pkt){
