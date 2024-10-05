@@ -44,8 +44,9 @@
         - Queues --> Buffers Everywhere DONE
         - Increase Time precision DONE
         - Read Saved Data for metric calculation DONE
-        - Change Time to System Time
-        - Metric Support
+        - Change Time to System Time DONE
+        - Metric Support DONE
+
         - Input Flow Types
 
         - Add metrics support:
@@ -86,7 +87,6 @@
 using namespace std;
 
 // Global Variables
-float routerTime = 0;      // Global time variable managed by a seperate thread
 mutex inputMutex[8];     // Input queue mutexes <-- will be used when scheduler implemented 
 mutex outputMutex[8];    // Output queue mutexes <-- will be used when scheduler implemented
 std::atomic<bool> stop_threads(false);
@@ -98,10 +98,7 @@ map<int, Packet*> allPackets;
 std::chrono::system_clock::time_point startTime;
 
 int main(int argc, char* argv[]){
-    // Seperate thread for managing time
     startTime = std::chrono::system_clock::now();
-    thread TimeThread(updateTime);
-    TimeThread.detach();
 
     // Instantiate Router
     Router *router = new Router;
@@ -138,6 +135,11 @@ int main(int argc, char* argv[]){
         cout << "Invalid Choice. Exiting...\n";
         return 1;
     }
+
+    // Create & Detach Thread for Tracking Size of each queue
+    // needed to calculate buffer occupancy
+    thread SizeThread(trackSize, router);
+    SizeThread.detach();
 
     // Sleep for some time and then kill all threads
     std::this_thread::sleep_for(std::chrono::seconds(SIMULATION_TIME));
@@ -243,8 +245,6 @@ void Router::removeFromOutputQueue(int outputQueueNumber){
     outputMutex[outputQueueNumber].lock();
     Packet* pkt = this->output[outputQueueNumber].front();
     this->output[outputQueueNumber].pop();
-    // pkt.sentTime = routerTime;
-    // allPackets[pkt.id].sentTime = routerTime; 
     map<int, Packet*>::iterator it = allPackets.find(pkt->id);
     if(it != allPackets.end()){
 
@@ -267,7 +267,6 @@ Packet* Router::removeFromInputQueue(int inputQueueNumber){
     Packet* pkt = this->input[inputQueueNumber].front();
     this->input[inputQueueNumber].pop();
     if(allPackets.find(pkt->id) != allPackets.end()){
-        // allPackets[pkt->id].startProcessingTime = routerTime;
         allPackets.find(pkt->id)->second->startProcessingTime = getTime();
     }
     inputMutex[inputQueueNumber].unlock();
@@ -279,11 +278,48 @@ ostream &operator<<(ostream &os, Packet const &pkt) {
     return os << pkt.id << " " << pkt.priority << " " << pkt.inputPort << " " << pkt.outputPort << " " << pkt.arrivalTime << " " << pkt.startProcessingTime << " " << pkt.sentTime << "\n";
 }
 
-void updateTime(){
-    while(!stop_threads.load()) {
-        this_thread::sleep_for(chrono::milliseconds(200));
-        routerTime += 0.2;
+void trackSize(Router* router){
+    std::vector<std::vector<int>> inputSizes;  
+    std::vector<std::vector<int>> outputSizes; 
+
+    std::ofstream outFile("queue_sizes.txt"); // Output file stream
+    if (!outFile.is_open()) {
+        std::cerr << "Error opening file for writing." << std::endl;
+        return;
     }
+
+    while (!stop_threads.load()) {
+        std::vector<int> currentInputSizes;
+        std::vector<int> currentOutputSizes;
+
+        for (int i = 0; i < NUM_QUEUES; i++) {
+            currentInputSizes.push_back(router->input[i].getSize());
+        }
+
+        for (int i = 0; i < NUM_QUEUES; i++) {
+            currentOutputSizes.push_back(router->output[i].getSize());
+        }
+
+        inputSizes.push_back(currentInputSizes);
+        outputSizes.push_back(currentOutputSizes);
+
+        outFile << "Time: " << getTime() << "\n";
+        outFile << "Input Queue Sizes: ";
+        for (const auto& size : currentInputSizes) {
+            outFile << size << " ";
+        }
+        outFile << "\n";
+
+        outFile << "Output Queue Sizes: ";
+        for (const auto& size : currentOutputSizes) {
+            outFile << size << " ";
+        }
+        outFile << "\n\n";
+        outFile.flush();
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+    outFile.close();
 }
 
 int getTime(){
@@ -345,7 +381,8 @@ void calculateMetrics(std::vector<Packet> * packets){
     float totalTurnaroundTime = 0;
     float queuewiseTotalTurnaroundTime[NUM_QUEUES] = {};
     
-    cout << "\n--- Simulation Results ---\n";
+    cout << "\n----- Simulation Results -----\n";
+    cout << "== General Statistics ==\n";
     cout << "Total Packets Generated: " << totalPackets << "\n";
 
     for(auto pkt: *packets){
@@ -362,40 +399,48 @@ void calculateMetrics(std::vector<Packet> * packets){
     cout << "Total Packets Dropped: " << totalDropped << "\n";
 
     // Queue Throughput
-
-
+    cout << "\n== Queue Throughput ==\n";
+    cout << "Combined Router Throughput: " << totalSuccessfullyTransmitted/(float)SIMULATION_TIME << " Packets/Second \n";
+    cout << "Queue Throughput for each Input Queue: \n";
+    for(int i = 0; i < NUM_QUEUES; i++){
+        cout << "Queue " << i << ": " << queuewiseTotalSuccessfulPackets[i]/(float)SIMULATION_TIME << " Packets/Second \n";
+    } 
 
     // Turnaround Time
+    cout << "\n== Turnaround Time ==\n";
     for(auto pkt: *packets){
         if(pkt.sentTime == 0) continue;
         totalTurnaroundTime += pkt.sentTime - pkt.arrivalTime;
         queuewiseTotalTurnaroundTime[pkt.inputPort] += pkt.sentTime - pkt.arrivalTime;
     }
-    cout << "Average Turnaround Time: " << totalTurnaroundTime/totalPackets << "ms \n";
+    cout << "Average Turnaround Time: " << totalTurnaroundTime/totalPackets << " ms \n";
     cout << "Turnaround Time for Each Input Queue: \n";
     for(int i = 0; i < NUM_QUEUES; i++){
-        cout << "Queue " << i << " : " << queuewiseTotalTurnaroundTime[i]/queuewiseTotalSuccessfulPackets[i] << "ms \n";
+        cout << "Queue " << i << ": " << queuewiseTotalTurnaroundTime[i]/queuewiseTotalSuccessfulPackets[i] << " ms \n";
     }
 
     // Waiting Time
+    cout << "\n== Waiting Time ==\n";
     for(auto pkt: *packets){
         totalWaitingTime += pkt.startProcessingTime - pkt.arrivalTime;
         queuewiseTotalWaitingTime[pkt.inputPort] += pkt.startProcessingTime - pkt.arrivalTime;
     }
-    cout << "Average Waiting Time: " << totalWaitingTime/totalPackets << "ms \n";
+    cout << "Average Waiting Time: " << totalWaitingTime/totalPackets << " ms \n";
     cout << "Waiting Time for Each Input Queue: \n";
     for(int i = 0; i < NUM_QUEUES; i++){
-        cout << "Queue " << i << " : " << queuewiseTotalWaitingTime[i]/queuewiseTotalSuccessfulPackets[i] << "ms \n";
+        cout << "Queue " << i << ": " << queuewiseTotalWaitingTime[i]/queuewiseTotalSuccessfulPackets[i] << " ms \n";
     }
 
     // Buffer Occupancy
-
+    cout << "\n== Buffer Occupancy ==\n";
+    cout << "For continous input and output buffer occupancy data, see queue_sizes.txt\n";
 
 
     // Packet Drop Rate
-    cout << "Percentage of Total Packets Dropped: " << totalDropped/(float)totalPackets << "\n";
+    cout << "\n== Packet Drop Rates ==\n";
+    cout << "Percentage of Total Packets Dropped: " << totalDropped/(float)totalPackets << "%\n";
     cout << "Percentage of Packets Dropped for each Input Queue: \n";
     for(int i = 0; i < NUM_QUEUES; i++){
-        cout << "Queue " << i << " : " << (queuewiseTotalDroppedPackets[i]/(float)queuewiseTotalPackets[i]) << "\n";
+        cout << "Queue " << i << ": " << (queuewiseTotalDroppedPackets[i]/(float)queuewiseTotalPackets[i]) << "%\n";
     } 
 }

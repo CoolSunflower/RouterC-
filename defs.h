@@ -48,23 +48,16 @@ public:
     int push(Packet*);
     void pop();
     Packet* front();
-    inline bool full() const {
-        return size == capacity;
-    }
-    inline bool empty() const {
-        return size == 0;
-    }
+    inline bool full() const { return size == capacity; }
+    inline bool empty() const { return size == 0; }
+    inline int getSize() const { return size; } 
 };
 
 class Router{
-private:
+public:
     Buffer input[NUM_QUEUES];
     Buffer output[NUM_QUEUES];
 
-    // std::queue<Packet> input[NUM_QUEUES];
-    // std::queue<Packet> output[NUM_QUEUES];
-
-public:
     // Link layer functions
     int addToInputQueue(int, Packet*);
     void removeFromOutputQueue(int);
@@ -75,7 +68,7 @@ public:
 };
 
 // Utility Functions
-void updateTime();
+void trackSize(Router*);
 void readAllPackets(std::vector<Packet>*);
 std::ostream &operator<<(std::ostream &os, Packet const &pkt);
 void printTransmitted(std::vector<Packet>*);
