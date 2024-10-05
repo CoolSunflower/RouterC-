@@ -78,7 +78,9 @@ public:
 void updateTime();
 void readAllPackets(std::vector<Packet>*);
 std::ostream &operator<<(std::ostream &os, Packet const &pkt);
-void printTransmitted();
+void printTransmitted(std::vector<Packet>*);
+int getTime();
+void calculateMetrics(std::vector<Packet>*);
 
 // The below 2 functions simulate the link layer
 void sendToQueue(Router*, int);
