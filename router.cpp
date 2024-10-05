@@ -52,6 +52,7 @@
         - Calculate Metrics in another file DONE
         - Priority Scheduler DONE
 
+        - Weighted Fair Scheduler
 
         - ...
         - do I really need a pid?
@@ -80,6 +81,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <random>
 #include "defs.h"
 using namespace std;
 
@@ -191,7 +193,44 @@ void PriorityScheduler(Router* router){
     }
 }
 
-void RoundRobinScheduler(Router *router){
+void WeightedFairScheduler(Router* router){
+    // WFQ Scheduler can be implemented probablistically using Lottery Scheduling
+    // Setting tickets 
+    int tickets[NUM_QUEUES] = {};
+    tickets[0] = tickets[4] = 100; // High Priority Bursty Traffic
+    tickets[1] = tickets[5] = 90; // High Priority Uniform Traffic
+    tickets[2] = tickets[6] = 50; // Low Priority Bursty Traffic
+    tickets[3] = tickets[7] = 40; // Low Priority Uniform Traffic
+    int totalTickets = 560;
+    std::random_device rd;  // Non-deterministic random number generator
+    std::mt19937 gen(rd()); // Seed the Mersenne Twister random number generator
+    std::uniform_int_distribution<> distrib(1, totalTickets);
+
+    while(!(stop_threads.load())){
+        // Sample queue
+        int winningTickets = distrib(gen);
+        int currentTickets = 0;
+        int selectedQueue = 0;
+
+        for(; selectedQueue < NUM_QUEUES; selectedQueue++){
+            currentTickets += tickets[selectedQueue];
+            if (winningTickets <= currentTickets) {
+                break;
+            }
+        }
+
+        // Get packet from Router Current Input Queue
+        Packet* pkt = router->removeFromInputQueue(selectedQueue);
+
+        // Sleep to simulate switching fabric delay
+        this_thread::sleep_for(chrono::milliseconds(10));
+
+        // Send to Corrent Output Queue
+        router->sendToOutputQueue(pkt->outputPort, pkt);
+    }
+}
+
+void RoundRobinScheduler(Router* router){
     // all it does is iterates thruogh the input queues, takes one and sends it to the output queues with waits in between
     int currQueue = 0;
     // this_thread::sleep_for(chrono::seconds(1));
