@@ -4,10 +4,12 @@
 // Includes
 #include <pthread.h>
 #include <queue>
+#include <iostream>
+#include <vector>
 
 // Defines
 #define NUM_QUEUES 8
-#define SIMULATION_TIME 15
+#define SIMULATION_TIME 5
 #define BUFFER_CAPACITY 64
 
 // Classes & Typedefs
@@ -15,19 +17,23 @@ class Packet{
 public:
     int id;
     int priority;
-    int arrivalTime;
-    int sentTime = 0;    // sentTime is 0 for dropped packets
+    float arrivalTime;
+    float startProcessingTime = 0; // when switching fabric processes this packet
+    float sentTime = 0;        // when finally sent on output link
+    // startProcessingTime is 0 for packets dropped on input queue
+    // sentTime is 0 for packets dropped on output queue
+    // wait whats the sense of output queue packet dropping?
     int inputPort;
     int outputPort;      // Forwarding Table, what's that?
 
-    Packet(int id, int priority, int arrivalTime, int inputPort, int outputPort){
+    Packet(int id, int priority, float arrivalTime, int inputPort, int outputPort){
         this->id = id;
         this->priority = priority;
         this->arrivalTime = arrivalTime;
         this->inputPort = inputPort;
         this->outputPort = outputPort;
     }
-
+    
     Packet* clone(){
         return new Packet(this->id, this->priority, this->arrivalTime, this->inputPort, this->outputPort);
     }
@@ -70,6 +76,8 @@ public:
 
 // Utility Functions
 void updateTime();
+void readAllPackets(std::vector<Packet>*);
+std::ostream &operator<<(std::ostream &os, Packet const &pkt);
 void printTransmitted();
 
 // The below 2 functions simulate the link layer
