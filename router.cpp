@@ -65,7 +65,6 @@
 // Includes
 // #include <cstddef>
 // #include <memory>
-#include <memory>
 #include <thread>
 #include <map>
 #include <chrono>
@@ -89,7 +88,7 @@ int pid = 0;             // packet id's
 mutex pidMutex;
 // vector<Packet> transmitted; // All packets successfully transmitted
 // Actually we want to maintain all packets!
-map<int, Packet> allPackets;
+map<int, Packet*> allPackets;
 
 int main(int argc, char* argv[]){
     // Seperate thread for managing time
@@ -178,7 +177,7 @@ void sendToQueue(Router * router, int inputQueueNumber){
         pidMutex.unlock();
 
         Packet* currPacket = new Packet(currPID, rand()%2, routerTime, inputQueueNumber, rand()%8);
-        allPackets.emplace(currPID, *currPacket);
+        allPackets.emplace(currPID, currPacket);
 
         // Push to Router
         router->addToInputQueue(inputQueueNumber, currPacket);
@@ -196,11 +195,11 @@ void removeFromQueue(Router * router, int outputQueueNumber){
     }
 }
 
-int Buffer::push(Packet pkt){
+int Buffer::push(Packet* pkt){
     if(this->full()) return 0; // Signified packet dropping
     this->bufferQueue.push(pkt);
     this->size += 1;
-    return pkt.id;
+    return pkt->id;
 }
 
 void Buffer::pop(){
@@ -208,13 +207,13 @@ void Buffer::pop(){
     this->size -= 1;
 }
 
-Packet Buffer::front(){
+Packet* Buffer::front(){
     return this->bufferQueue.front();
 }
 
 int Router::addToInputQueue(int inputQueueNumber, Packet* pkt){
     inputMutex[inputQueueNumber].lock();
-    int ret = this->input[inputQueueNumber].push(*pkt);
+    int ret = this->input[inputQueueNumber].push(pkt);
     // this->input[inputQueueNumber].push(*pkt);
     inputMutex[inputQueueNumber].unlock();
     return ret;
@@ -222,7 +221,7 @@ int Router::addToInputQueue(int inputQueueNumber, Packet* pkt){
 
 int Router::sendToOutputQueue(int outputQueueNumber, Packet* pkt){
     outputMutex[outputQueueNumber].lock();
-    int ret = this->output[outputQueueNumber].push(*pkt);
+    int ret = this->output[outputQueueNumber].push(pkt);
     // this->output[outputQueueNumber].push(*pkt);
     outputMutex[outputQueueNumber].unlock();
     return ret;
@@ -232,18 +231,20 @@ void Router::removeFromOutputQueue(int outputQueueNumber){
     while(this->output[outputQueueNumber].empty());
 
     outputMutex[outputQueueNumber].lock();
-    Packet pkt = this->output[outputQueueNumber].front();
+    Packet* pkt = this->output[outputQueueNumber].front();
     this->output[outputQueueNumber].pop();
     // pkt.sentTime = routerTime;
     // allPackets[pkt.id].sentTime = routerTime; 
-    map<int, Packet>::iterator it = allPackets.find(pkt.id);
+    map<int, Packet*>::iterator it = allPackets.find(pkt->id);
     if(it != allPackets.end()){
 
-        it->second.sentTime = routerTime;
+        it->second->sentTime = routerTime;
 
         // to avoid unnecessary storage, we can store the information of the packet in a file and delete it
-        cout << it->second;
+        cout << *it->second;
+        Packet* pktptr = it->second;
         allPackets.erase(it);
+        delete pktptr;
     }
 
     outputMutex[outputQueueNumber].unlock();
@@ -253,11 +254,11 @@ Packet* Router::removeFromInputQueue(int inputQueueNumber){
     while(this->input[inputQueueNumber].empty());
 
     inputMutex[inputQueueNumber].lock();
-    Packet* pkt = this->input[inputQueueNumber].front().clone();
+    Packet* pkt = this->input[inputQueueNumber].front();
     this->input[inputQueueNumber].pop();
     if(allPackets.find(pkt->id) != allPackets.end()){
         // allPackets[pkt->id].startProcessingTime = routerTime;
-        allPackets.find(pkt->id)->second.startProcessingTime = routerTime;
+        allPackets.find(pkt->id)->second->startProcessingTime = routerTime;
     }
     inputMutex[inputQueueNumber].unlock();
 

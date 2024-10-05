@@ -42,12 +42,12 @@ public:
 class Buffer{
     int capacity = BUFFER_CAPACITY;
     int size = 0;
-    std::queue<Packet> bufferQueue;
+    std::queue<Packet*> bufferQueue;
 
 public:
-    int push(Packet);
+    int push(Packet*);
     void pop();
-    Packet front();
+    Packet* front();
     inline bool full() const {
         return size == capacity;
     }
