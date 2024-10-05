@@ -6,13 +6,7 @@
 #include <queue>
 #include <iostream>
 #include <vector>
-
-// Defines
-#define NUM_QUEUES 8
-#define SIMULATION_TIME 30
-#define BUFFER_CAPACITY 64
-#define BURST_LOW 25
-#define BURST_HIGH 35
+#include "const.h"
 
 // Classes & Typedefs
 class Packet{
@@ -75,14 +69,14 @@ void readAllPackets(std::vector<Packet>*);
 std::ostream &operator<<(std::ostream &os, Packet const &pkt);
 void printTransmitted(std::vector<Packet>*);
 int getTime();
-void calculateMetrics();
 
 // The below 2 functions simulate the link layer
 void sendToQueue(Router*, int);
 void removeFromQueue(Router*, int);
 
 // Scheduler Function
-// void PriorityScheduler(Router*);
+void PriorityScheduler(Router*);
 void RoundRobinScheduler(Router*);
+void WeightedFairScheduler(Router*);
 
 #endif //DEFS_H_
