@@ -1,800 +1,800 @@
-Time: 603
-Input Queue Sizes: 0 1 1 0 0 0 0 0 
+Time: 1933
+Input Queue Sizes: 0 0 0 0 0 0 0 0 
 Output Queue Sizes: 0 0 0 0 0 0 0 0 
 
-Time: 653
-Input Queue Sizes: 8 1 13 1 12 1 13 1 
-Output Queue Sizes: 0 0 0 0 0 0 0 0 
-
-Time: 703
-Input Queue Sizes: 15 2 24 2 24 2 25 3 
-Output Queue Sizes: 0 0 0 2 1 0 0 0 
-
-Time: 753
-Input Queue Sizes: 21 3 32 3 36 3 33 4 
-Output Queue Sizes: 0 1 0 2 2 0 0 0 
-
-Time: 804
-Input Queue Sizes: 16 4 32 4 38 4 33 4 
-Output Queue Sizes: 0 2 0 2 3 0 0 0 
-
-Time: 854
-Input Queue Sizes: 11 5 32 5 38 4 33 5 
-Output Queue Sizes: 2 1 0 3 2 0 0 0 
-
-Time: 904
-Input Queue Sizes: 6 5 32 6 38 6 33 6 
-Output Queue Sizes: 1 0 0 3 2 2 0 0 
-
-Time: 954
-Input Queue Sizes: 1 6 32 7 38 6 33 7 
-Output Queue Sizes: 2 0 0 2 4 2 0 0 
-
-Time: 1004
-Input Queue Sizes: 0 7 32 8 34 7 33 7 
-Output Queue Sizes: 1 0 0 4 3 2 0 0 
-
-Time: 1054
-Input Queue Sizes: 0 8 32 9 29 8 33 9 
-Output Queue Sizes: 1 0 0 3 2 4 0 0 
-
-Time: 1104
-Input Queue Sizes: 0 9 32 10 24 9 33 10 
-Output Queue Sizes: 2 0 2 3 2 4 0 0 
-
-Time: 1154
-Input Queue Sizes: 0 9 32 11 19 10 33 10 
-Output Queue Sizes: 2 0 2 3 2 3 0 0 
-
-Time: 1204
-Input Queue Sizes: 0 10 32 12 14 11 33 11 
-Output Queue Sizes: 1 0 4 3 2 3 0 0 
-
-Time: 1254
-Input Queue Sizes: 0 11 32 13 9 12 33 12 
-Output Queue Sizes: 1 0 5 2 3 3 0 0 
-
-Time: 1304
-Input Queue Sizes: 0 12 32 14 4 12 33 13 
-Output Queue Sizes: 0 0 5 2 3 4 0 0 
-
-Time: 1355
-Input Queue Sizes: 0 12 32 15 0 14 33 13 
-Output Queue Sizes: 1 0 5 1 3 4 0 0 
-
-Time: 1405
-Input Queue Sizes: 0 8 32 15 0 15 33 14 
-Output Queue Sizes: 1 1 6 1 3 3 0 0 
-
-Time: 1455
-Input Queue Sizes: 0 4 32 16 0 16 33 15 
-Output Queue Sizes: 1 0 6 2 3 2 1 0 
-
-Time: 1505
-Input Queue Sizes: 0 0 32 17 0 16 33 16 
-Output Queue Sizes: 0 2 6 1 3 2 1 0 
-
-Time: 1555
-Input Queue Sizes: 0 0 32 18 0 12 33 17 
-Output Queue Sizes: 1 1 7 1 3 2 0 0 
-
-Time: 1605
-Input Queue Sizes: 0 0 32 19 0 9 33 18 
-Output Queue Sizes: 1 1 6 2 4 1 0 0 
-
-Time: 1655
-Input Queue Sizes: 0 0 32 19 0 6 33 19 
-Output Queue Sizes: 1 1 6 1 5 1 0 0 
-
-Time: 1706
-Input Queue Sizes: 0 0 32 20 0 4 33 19 
-Output Queue Sizes: 2 1 7 0 5 2 0 0 
-
-Time: 1756
-Input Queue Sizes: 0 0 32 21 0 0 33 20 
-Output Queue Sizes: 2 1 6 0 5 1 0 1 
-
-Time: 1806
-Input Queue Sizes: 0 0 28 22 0 0 33 21 
-Output Queue Sizes: 1 1 6 0 6 1 0 0 
-
-Time: 1856
-Input Queue Sizes: 0 0 25 23 0 0 33 22 
-Output Queue Sizes: 2 0 6 0 8 1 0 1 
-
-Time: 1906
-Input Queue Sizes: 0 0 21 24 0 0 33 23 
-Output Queue Sizes: 1 0 6 0 8 0 0 1 
-
-Time: 1956
-Input Queue Sizes: 0 0 18 25 0 1 33 23 
-Output Queue Sizes: 0 0 5 2 8 0 0 1 
-
-Time: 2007
-Input Queue Sizes: 0 0 15 26 0 0 33 24 
-Output Queue Sizes: 1 1 5 2 10 0 0 1 
-
-Time: 2057
-Input Queue Sizes: 0 0 11 26 0 0 33 25 
-Output Queue Sizes: 0 1 5 3 9 0 0 0 
-
-Time: 2107
-Input Queue Sizes: 0 0 8 27 0 0 33 26 
-Output Queue Sizes: 1 1 4 4 9 0 0 0 
-
-Time: 2157
-Input Queue Sizes: 0 0 4 28 0 0 33 26 
-Output Queue Sizes: 1 1 4 4 10 0 0 0 
-
-Time: 2207
-Input Queue Sizes: 0 1 0 28 0 1 33 27 
-Output Queue Sizes: 1 0 4 4 10 0 0 0 
-
-Time: 2257
-Input Queue Sizes: 0 0 0 29 0 0 31 28 
-Output Queue Sizes: 1 1 3 3 10 1 0 0 
-
-Time: 2308
-Input Queue Sizes: 0 0 0 30 0 0 27 28 
-Output Queue Sizes: 1 1 3 3 11 1 1 0 
-
-Time: 2358
-Input Queue Sizes: 0 0 0 31 0 0 24 29 
-Output Queue Sizes: 0 0 2 2 11 1 3 0 
-
-Time: 2408
-Input Queue Sizes: 0 0 0 31 0 0 21 30 
-Output Queue Sizes: 0 0 1 1 13 1 4 0 
-
-Time: 2458
-Input Queue Sizes: 0 1 0 32 0 0 18 30 
-Output Queue Sizes: 0 0 2 1 13 1 5 0 
-
-Time: 2508
-Input Queue Sizes: 0 0 0 33 0 0 15 32 
-Output Queue Sizes: 0 0 2 1 13 0 4 0 
-
-Time: 2558
-Input Queue Sizes: 0 0 0 34 0 0 12 33 
-Output Queue Sizes: 1 1 1 0 13 0 4 0 
-
-Time: 2608
-Input Queue Sizes: 0 0 0 34 0 0 9 34 
-Output Queue Sizes: 0 1 2 1 14 0 3 1 
-
-Time: 2659
-Input Queue Sizes: 0 0 0 35 0 0 6 35 
-Output Queue Sizes: 0 0 2 0 15 0 2 0 
-
-Time: 2709
-Input Queue Sizes: 0 0 0 37 0 0 3 36 
-Output Queue Sizes: 0 0 3 0 14 1 2 0 
-
-Time: 2759
-Input Queue Sizes: 0 0 0 37 0 0 0 36 
-Output Queue Sizes: 0 1 4 0 16 0 2 0 
-
-Time: 2809
-Input Queue Sizes: 0 0 0 35 0 0 0 37 
-Output Queue Sizes: 0 3 3 0 16 0 1 0 
-
-Time: 2859
-Input Queue Sizes: 0 0 0 34 0 0 0 38 
-Output Queue Sizes: 0 2 3 0 16 1 2 0 
-
-Time: 2909
-Input Queue Sizes: 0 0 0 30 0 1 0 39 
-Output Queue Sizes: 0 2 3 0 16 1 2 0 
-
-Time: 2960
-Input Queue Sizes: 0 0 0 27 0 0 0 40 
-Output Queue Sizes: 0 3 2 0 15 0 3 0 
-
-Time: 3010
-Input Queue Sizes: 0 0 0 25 0 0 0 41 
-Output Queue Sizes: 1 2 2 0 14 1 4 0 
-
-Time: 3060
-Input Queue Sizes: 0 0 0 23 0 0 0 42 
-Output Queue Sizes: 1 3 2 0 15 0 3 0 
-
-Time: 3110
-Input Queue Sizes: 0 0 0 20 0 0 0 43 
-Output Queue Sizes: 1 3 2 0 16 0 2 0 
-
-Time: 3160
-Input Queue Sizes: 0 0 0 18 0 0 0 44 
-Output Queue Sizes: 0 2 2 0 15 0 2 4 
-
-Time: 3210
-Input Queue Sizes: 0 0 0 15 0 0 0 45 
-Output Queue Sizes: 0 4 3 0 16 0 1 4 
-
-Time: 3260
-Input Queue Sizes: 0 0 0 12 0 1 0 45 
-Output Queue Sizes: 0 3 5 0 16 0 0 3 
-
-Time: 3310
-Input Queue Sizes: 0 0 0 9 0 0 0 46 
-Output Queue Sizes: 0 5 6 0 15 0 0 3 
-
-Time: 3360
-Input Queue Sizes: 0 0 4 8 0 0 0 47 
-Output Queue Sizes: 0 7 6 0 15 0 0 3 
-
-Time: 3411
-Input Queue Sizes: 0 1 13 9 0 0 0 48 
-Output Queue Sizes: 0 8 5 0 14 0 2 2 
-
-Time: 3461
-Input Queue Sizes: 0 0 23 10 0 0 0 49 
-Output Queue Sizes: 0 7 5 0 14 0 2 4 
-
-Time: 3511
-Input Queue Sizes: 0 0 25 11 0 0 0 50 
-Output Queue Sizes: 0 7 7 0 14 0 2 3 
-
-Time: 3561
-Input Queue Sizes: 0 0 22 12 0 0 0 51 
-Output Queue Sizes: 0 7 7 0 14 0 3 2 
-
-Time: 3611
-Input Queue Sizes: 0 0 18 12 0 0 0 52 
-Output Queue Sizes: 0 7 8 0 13 0 3 3 
-
-Time: 3661
-Input Queue Sizes: 0 0 15 13 0 0 0 52 
-Output Queue Sizes: 0 8 8 0 13 0 3 4 
-
-Time: 3711
-Input Queue Sizes: 0 0 11 14 0 1 0 53 
-Output Queue Sizes: 0 7 7 2 13 0 3 5 
-
-Time: 3761
-Input Queue Sizes: 0 0 9 15 0 0 0 54 
-Output Queue Sizes: 0 6 9 1 12 0 2 6 
-
-Time: 3811
-Input Queue Sizes: 0 0 4 16 0 1 0 55 
-Output Queue Sizes: 1 7 10 1 12 0 1 6 
-
-Time: 3862
-Input Queue Sizes: 4 0 3 17 0 0 0 56 
-Output Queue Sizes: 0 7 10 2 11 0 2 6 
-
-Time: 3912
-Input Queue Sizes: 11 1 3 18 0 1 0 56 
-Output Queue Sizes: 0 6 10 2 10 0 1 8 
-
-Time: 3962
-Input Queue Sizes: 18 2 3 18 0 2 0 57 
-Output Queue Sizes: 0 6 11 2 11 0 1 7 
-
-Time: 4012
-Input Queue Sizes: 15 3 3 19 0 4 0 58 
-Output Queue Sizes: 0 5 11 4 10 0 1 7 
-
-Time: 4062
-Input Queue Sizes: 10 4 3 20 9 4 0 59 
-Output Queue Sizes: 0 4 11 4 9 1 0 8 
-
-Time: 4112
-Input Queue Sizes: 5 4 3 20 22 5 11 60 
-Output Queue Sizes: 0 5 11 6 9 1 0 7 
-
-Time: 4162
-Input Queue Sizes: 1 5 3 21 35 6 23 61 
-Output Queue Sizes: 0 5 10 7 8 2 0 7 
-
-Time: 4212
-Input Queue Sizes: 0 7 3 22 33 7 34 62 
-Output Queue Sizes: 1 6 9 7 7 1 0 7 
-
-Time: 4263
-Input Queue Sizes: 0 7 3 23 28 8 37 63 
-Output Queue Sizes: 0 6 10 7 8 0 0 7 
-
-Time: 4313
-Input Queue Sizes: 0 8 3 23 23 8 37 63 
-Output Queue Sizes: 0 5 10 7 9 1 1 6 
-
-Time: 4363
-Input Queue Sizes: 0 9 3 24 18 9 37 64 
-Output Queue Sizes: 0 5 9 6 8 1 1 7 
-
-Time: 4413
-Input Queue Sizes: 0 10 3 25 13 10 37 64 
-Output Queue Sizes: 1 6 10 6 8 0 0 6 
-
-Time: 4463
-Input Queue Sizes: 0 11 3 25 8 11 37 64 
-Output Queue Sizes: 1 5 11 6 8 0 2 5 
-
-Time: 4514
-Input Queue Sizes: 0 12 3 26 3 12 37 64 
-Output Queue Sizes: 0 5 11 5 7 1 2 5 
-
-Time: 4564
-Input Queue Sizes: 0 11 3 27 0 13 37 64 
-Output Queue Sizes: 0 5 11 6 7 0 1 7 
-
-Time: 4614
-Input Queue Sizes: 0 7 3 28 0 13 37 64 
-Output Queue Sizes: 0 5 11 6 6 1 2 6 
-
-Time: 4664
-Input Queue Sizes: 0 2 3 29 0 15 37 64 
-Output Queue Sizes: 1 5 11 5 5 1 1 7 
-
-Time: 4714
-Input Queue Sizes: 0 1 3 30 0 13 37 64 
-Output Queue Sizes: 1 5 12 6 5 0 0 7 
-
-Time: 4764
-Input Queue Sizes: 0 0 3 30 0 10 37 64 
-Output Queue Sizes: 0 5 12 7 4 1 0 7 
-
-Time: 4815
-Input Queue Sizes: 0 0 3 31 0 7 37 64 
-Output Queue Sizes: 2 4 11 8 3 0 0 8 
-
-Time: 4865
-Input Queue Sizes: 0 0 3 32 0 3 37 64 
-Output Queue Sizes: 1 5 11 9 4 0 0 8 
-
-Time: 4915
-Input Queue Sizes: 0 0 2 33 0 0 37 64 
-Output Queue Sizes: 0 4 10 9 3 0 0 10 
-
-Time: 4965
-Input Queue Sizes: 0 0 0 34 0 0 36 64 
-Output Queue Sizes: 3 3 9 8 2 2 0 10 
-
-Time: 5015
-Input Queue Sizes: 0 0 0 35 0 0 32 64 
-Output Queue Sizes: 3 3 9 7 2 4 0 9 
-
-Time: 5065
-Input Queue Sizes: 0 0 0 36 0 0 30 64 
-Output Queue Sizes: 2 2 10 8 1 3 0 9 
-
-Time: 5116
-Input Queue Sizes: 0 0 0 37 0 0 27 64 
-Output Queue Sizes: 2 3 10 8 0 3 0 10 
-
-Time: 5166
-Input Queue Sizes: 0 0 0 38 0 0 24 64 
-Output Queue Sizes: 2 4 11 7 1 2 0 10 
-
-Time: 5216
-Input Queue Sizes: 0 0 0 38 0 1 21 64 
-Output Queue Sizes: 2 4 10 8 1 2 0 9 
-
-Time: 5266
-Input Queue Sizes: 0 0 0 39 0 0 17 64 
-Output Queue Sizes: 2 3 10 7 0 4 1 9 
-
-Time: 5316
-Input Queue Sizes: 0 0 0 40 0 0 14 64 
-Output Queue Sizes: 2 3 11 6 1 3 0 10 
-
-Time: 5366
-Input Queue Sizes: 0 0 0 41 0 0 11 64 
-Output Queue Sizes: 1 3 10 8 0 3 1 9 
-
-Time: 5417
-Input Queue Sizes: 0 0 0 41 0 0 7 64 
-Output Queue Sizes: 2 2 9 9 0 4 0 10 
-
-Time: 5467
-Input Queue Sizes: 0 0 0 42 0 0 4 64 
-Output Queue Sizes: 1 3 11 10 0 3 0 9 
-
-Time: 5517
-Input Queue Sizes: 0 0 0 43 0 0 1 64 
-Output Queue Sizes: 0 2 11 10 1 3 0 8 
-
-Time: 5567
-Input Queue Sizes: 0 0 0 42 0 0 0 64 
-Output Queue Sizes: 1 2 11 10 1 4 0 8 
-
-Time: 5617
-Input Queue Sizes: 0 1 0 39 0 0 0 64 
-Output Queue Sizes: 0 3 11 11 0 3 0 9 
-
-Time: 5668
-Input Queue Sizes: 0 0 0 37 0 0 0 64 
-Output Queue Sizes: 1 2 12 11 0 2 0 9 
-
-Time: 5718
+Time: 1983
+Input Queue Sizes: 8 2 14 1 13 2 12 1 
+Output Queue Sizes: 0 0 0 0 0 0 1 0 
+
+Time: 2033
+Input Queue Sizes: 15 2 25 2 25 3 24 2 
+Output Queue Sizes: 0 0 0 1 1 0 0 0 
+
+Time: 2083
+Input Queue Sizes: 20 3 34 3 38 3 34 3 
+Output Queue Sizes: 0 1 0 3 0 0 0 0 
+
+Time: 2133
+Input Queue Sizes: 16 4 34 4 38 4 34 3 
+Output Queue Sizes: 0 1 0 3 1 0 0 0 
+
+Time: 2183
+Input Queue Sizes: 11 5 34 5 38 5 34 4 
+Output Queue Sizes: 0 0 1 3 0 0 0 0 
+
+Time: 2233
+Input Queue Sizes: 6 6 34 6 38 6 34 5 
+Output Queue Sizes: 1 0 2 4 0 0 0 0 
+
+Time: 2284
+Input Queue Sizes: 1 6 34 7 38 7 34 6 
+Output Queue Sizes: 0 0 1 5 0 0 1 0 
+
+Time: 2334
+Input Queue Sizes: 0 7 34 7 34 8 34 7 
+Output Queue Sizes: 0 1 1 5 0 0 2 0 
+
+Time: 2384
+Input Queue Sizes: 0 8 34 8 29 9 34 8 
+Output Queue Sizes: 0 1 0 5 0 0 3 0 
+
+Time: 2434
+Input Queue Sizes: 0 9 34 9 24 9 34 9 
+Output Queue Sizes: 0 2 0 5 1 0 2 0 
+
+Time: 2484
+Input Queue Sizes: 0 10 34 10 19 11 34 10 
+Output Queue Sizes: 1 2 0 4 0 0 2 0 
+
+Time: 2534
+Input Queue Sizes: 0 11 34 11 14 12 34 11 
+Output Queue Sizes: 0 1 2 5 2 0 1 0 
+
+Time: 2584
+Input Queue Sizes: 0 11 34 12 9 12 34 11 
+Output Queue Sizes: 0 2 1 4 2 1 1 0 
+
+Time: 2634
+Input Queue Sizes: 0 12 34 12 4 13 34 12 
+Output Queue Sizes: 0 1 1 5 3 1 1 0 
+
+Time: 2684
+Input Queue Sizes: 0 12 34 13 0 14 34 13 
+Output Queue Sizes: 0 1 1 6 3 0 1 0 
+
+Time: 2735
+Input Queue Sizes: 0 8 34 14 0 15 34 14 
+Output Queue Sizes: 0 1 0 7 4 0 1 0 
+
+Time: 2785
+Input Queue Sizes: 0 4 34 15 0 15 34 15 
+Output Queue Sizes: 0 2 0 6 5 0 1 0 
+
+Time: 2835
+Input Queue Sizes: 0 1 34 16 0 15 34 16 
+Output Queue Sizes: 0 1 0 7 5 0 1 0 
+
+Time: 2885
+Input Queue Sizes: 0 0 34 17 0 14 34 17 
+Output Queue Sizes: 1 2 0 7 6 0 0 0 
+
+Time: 2935
+Input Queue Sizes: 0 0 34 17 0 9 34 18 
+Output Queue Sizes: 1 2 0 8 5 0 1 0 
+
+Time: 2985
+Input Queue Sizes: 0 0 34 18 0 6 34 19 
+Output Queue Sizes: 0 2 0 9 5 0 1 0 
+
+Time: 3036
+Input Queue Sizes: 0 0 34 19 0 3 34 20 
+Output Queue Sizes: 3 2 0 8 5 0 0 0 
+
+Time: 3086
+Input Queue Sizes: 0 0 34 20 0 0 34 20 
+Output Queue Sizes: 2 2 0 7 5 0 2 0 
+
+Time: 3136
+Input Queue Sizes: 0 0 31 21 0 0 34 21 
+Output Queue Sizes: 1 1 2 8 6 0 1 0 
+
+Time: 3186
+Input Queue Sizes: 0 0 27 21 0 0 34 22 
+Output Queue Sizes: 1 1 1 9 6 1 0 0 
+
+Time: 3236
+Input Queue Sizes: 0 0 24 22 0 0 34 22 
+Output Queue Sizes: 0 0 0 8 6 0 1 1 
+
+Time: 3287
+Input Queue Sizes: 0 0 21 23 0 0 34 23 
+Output Queue Sizes: 0 0 0 8 8 1 1 1 
+
+Time: 3337
+Input Queue Sizes: 0 0 18 24 0 0 34 24 
+Output Queue Sizes: 0 0 0 8 8 1 0 3 
+
+Time: 3387
+Input Queue Sizes: 0 0 14 24 0 1 34 25 
+Output Queue Sizes: 0 1 0 7 8 1 0 3 
+
+Time: 3437
+Input Queue Sizes: 0 0 10 25 0 0 34 25 
+Output Queue Sizes: 1 0 0 7 8 2 0 4 
+
+Time: 3487
+Input Queue Sizes: 0 0 7 26 0 0 34 26 
+Output Queue Sizes: 0 0 0 6 8 4 0 4 
+
+Time: 3537
+Input Queue Sizes: 0 0 3 27 0 1 34 27 
+Output Queue Sizes: 0 1 0 5 8 3 0 4 
+
+Time: 3587
+Input Queue Sizes: 0 0 0 28 0 0 34 28 
+Output Queue Sizes: 0 0 1 5 9 3 1 4 
+
+Time: 3637
+Input Queue Sizes: 0 0 0 29 0 0 30 29 
+Output Queue Sizes: 0 1 1 4 9 2 2 4 
+
+Time: 3688
+Input Queue Sizes: 0 0 0 30 0 0 26 30 
+Output Queue Sizes: 1 0 1 4 8 1 3 3 
+
+Time: 3738
+Input Queue Sizes: 0 0 0 31 0 0 23 31 
+Output Queue Sizes: 0 0 3 5 9 1 3 2 
+
+Time: 3788
+Input Queue Sizes: 0 0 0 31 0 0 20 32 
+Output Queue Sizes: 0 0 3 4 8 0 3 4 
+
+Time: 3838
+Input Queue Sizes: 0 0 0 33 0 0 16 33 
+Output Queue Sizes: 0 1 3 3 9 0 4 3 
+
+Time: 3888
+Input Queue Sizes: 0 0 0 33 0 0 13 34 
+Output Queue Sizes: 0 0 4 5 9 0 4 2 
+
+Time: 3938
+Input Queue Sizes: 0 0 0 35 0 0 10 35 
+Output Queue Sizes: 0 0 4 7 8 0 3 2 
+
+Time: 3988
+Input Queue Sizes: 0 0 0 36 0 0 7 36 
+Output Queue Sizes: 1 0 6 6 7 0 3 1 
+
+Time: 4039
+Input Queue Sizes: 0 0 0 37 0 0 4 36 
+Output Queue Sizes: 0 2 5 6 8 0 4 0 
+
+Time: 4089
+Input Queue Sizes: 0 0 0 38 0 0 1 37 
+Output Queue Sizes: 0 1 5 5 8 1 3 2 
+
+Time: 4139
+Input Queue Sizes: 0 0 0 36 0 1 0 38 
+Output Queue Sizes: 0 1 7 4 7 1 2 1 
+
+Time: 4189
+Input Queue Sizes: 0 0 0 32 0 0 0 39 
+Output Queue Sizes: 0 3 7 4 7 0 3 1 
+
+Time: 4240
+Input Queue Sizes: 0 0 0 31 0 0 0 40 
+Output Queue Sizes: 0 3 7 3 6 1 3 1 
+
+Time: 4290
+Input Queue Sizes: 0 0 0 29 0 0 0 41 
+Output Queue Sizes: 0 4 7 3 5 0 3 1 
+
+Time: 4340
+Input Queue Sizes: 0 0 0 26 0 0 0 41 
+Output Queue Sizes: 0 5 7 3 5 0 4 0 
+
+Time: 4390
+Input Queue Sizes: 0 0 0 24 0 0 0 42 
+Output Queue Sizes: 1 4 6 3 4 0 4 2 
+
+Time: 4440
+Input Queue Sizes: 0 0 0 22 0 0 0 43 
+Output Queue Sizes: 0 4 6 2 6 0 4 1 
+
+Time: 4490
+Input Queue Sizes: 0 0 0 19 0 0 0 44 
+Output Queue Sizes: 0 5 5 3 7 0 5 1 
+
+Time: 4540
+Input Queue Sizes: 0 0 0 17 0 0 0 45 
+Output Queue Sizes: 0 4 6 2 7 0 4 2 
+
+Time: 4590
+Input Queue Sizes: 0 0 0 14 0 0 0 45 
+Output Queue Sizes: 0 3 7 1 7 0 3 2 
+
+Time: 4641
+Input Queue Sizes: 0 0 0 12 0 0 0 46 
+Output Queue Sizes: 2 3 6 1 9 0 3 2 
+
+Time: 4691
+Input Queue Sizes: 0 1 0 9 0 0 0 47 
+Output Queue Sizes: 2 4 6 0 8 0 2 2 
+
+Time: 4741
+Input Queue Sizes: 0 0 0 5 0 0 0 48 
+Output Queue Sizes: 1 4 7 0 7 1 2 1 
+
+Time: 4791
+Input Queue Sizes: 0 0 0 3 0 1 0 48 
+Output Queue Sizes: 1 5 7 1 7 1 2 1 
+
+Time: 4842
+Input Queue Sizes: 0 0 0 1 0 0 0 49 
+Output Queue Sizes: 0 6 6 1 7 1 1 1 
+
+Time: 4892
+Input Queue Sizes: 0 0 0 0 0 0 0 49 
+Output Queue Sizes: 0 5 6 1 6 2 3 0 
+
+Time: 4942
+Input Queue Sizes: 0 0 0 0 0 0 0 48 
+Output Queue Sizes: 0 5 5 2 8 2 4 0 
+
+Time: 4992
+Input Queue Sizes: 0 0 0 0 0 1 6 49 
+Output Queue Sizes: 0 5 5 2 8 1 3 0 
+
+Time: 5042
+Input Queue Sizes: 0 0 0 1 0 0 16 50 
+Output Queue Sizes: 1 5 5 2 7 1 2 0 
+
+Time: 5093
+Input Queue Sizes: 0 0 0 2 0 0 23 51 
+Output Queue Sizes: 1 5 6 3 8 0 2 1 
+
+Time: 5143
+Input Queue Sizes: 0 0 0 3 0 0 20 51 
+Output Queue Sizes: 0 4 7 2 7 1 1 0 
+
+Time: 5193
+Input Queue Sizes: 0 0 0 4 0 0 17 53 
+Output Queue Sizes: 0 4 7 2 6 1 1 0 
+
+Time: 5244
+Input Queue Sizes: 0 0 0 5 0 0 14 53 
+Output Queue Sizes: 0 4 9 2 6 1 1 1 
+
+Time: 5294
+Input Queue Sizes: 0 0 0 5 0 0 10 54 
+Output Queue Sizes: 0 3 8 2 5 2 1 0 
+
+Time: 5344
+Input Queue Sizes: 0 0 7 6 0 0 9 55 
+Output Queue Sizes: 1 3 7 1 4 4 1 0 
+
+Time: 5394
+Input Queue Sizes: 0 0 15 7 0 0 9 56 
+Output Queue Sizes: 1 3 8 3 5 3 1 0 
+
+Time: 5445
+Input Queue Sizes: 0 1 24 8 0 0 9 56 
+Output Queue Sizes: 1 3 8 3 4 2 0 0 
+
+Time: 5495
+Input Queue Sizes: 0 0 27 9 0 0 9 57 
+Output Queue Sizes: 1 3 8 4 3 3 0 0 
+
+Time: 5545
+Input Queue Sizes: 0 0 24 10 0 0 9 58 
+Output Queue Sizes: 1 3 8 5 3 4 0 0 
+
+Time: 5595
+Input Queue Sizes: 0 0 21 11 0 0 9 59 
+Output Queue Sizes: 1 2 8 5 2 3 0 1 
+
+Time: 5645
+Input Queue Sizes: 0 0 18 12 0 0 9 60 
+Output Queue Sizes: 1 2 7 6 1 5 0 0 
+
+Time: 5696
+Input Queue Sizes: 0 0 14 12 0 0 9 61 
+Output Queue Sizes: 1 3 8 7 1 5 0 0 
+
+Time: 5746
+Input Queue Sizes: 0 0 10 13 0 0 9 62 
+Output Queue Sizes: 1 2 7 6 0 6 0 1 
+
+Time: 5796
+Input Queue Sizes: 0 0 7 14 0 0 9 63 
+Output Queue Sizes: 2 3 6 5 0 6 0 1 
+
+Time: 5846
+Input Queue Sizes: 0 1 4 15 1 1 9 64 
+Output Queue Sizes: 2 3 7 6 0 5 0 2 
+
+Time: 5896
+Input Queue Sizes: 7 1 4 16 13 1 9 64 
+Output Queue Sizes: 1 3 7 5 1 4 1 1 
+
+Time: 5947
+Input Queue Sizes: 14 2 4 17 24 2 9 64 
+Output Queue Sizes: 1 3 7 4 2 5 0 1 
+
+Time: 5997
+Input Queue Sizes: 22 3 4 17 29 3 9 64 
+Output Queue Sizes: 0 3 8 4 1 5 0 3 
+
+Time: 6047
+Input Queue Sizes: 20 4 4 18 29 4 9 64 
+Output Queue Sizes: 0 2 7 3 1 5 2 2 
+
+Time: 6097
+Input Queue Sizes: 15 5 4 19 29 5 9 64 
+Output Queue Sizes: 0 3 7 2 2 5 1 2 
+
+Time: 6148
+Input Queue Sizes: 11 5 4 20 29 6 9 64 
+Output Queue Sizes: 0 5 7 2 2 4 0 3 
+
+Time: 6198
+Input Queue Sizes: 6 6 4 20 29 6 9 64 
+Output Queue Sizes: 0 4 7 2 1 3 1 3 
+
+Time: 6248
+Input Queue Sizes: 1 7 4 21 29 7 9 64 
+Output Queue Sizes: 0 3 7 1 3 3 0 3 
+
+Time: 6298
+Input Queue Sizes: 0 8 4 22 25 8 9 64 
+Output Queue Sizes: 1 3 9 2 2 2 0 3 
+
+Time: 6349
+Input Queue Sizes: 0 9 4 22 20 8 9 64 
+Output Queue Sizes: 1 2 8 2 1 2 2 2 
+
+Time: 6399
+Input Queue Sizes: 0 10 4 23 15 10 9 64 
+Output Queue Sizes: 0 1 8 2 1 3 2 2 
+
+Time: 6449
+Input Queue Sizes: 0 11 4 24 10 11 9 64 
+Output Queue Sizes: 0 2 8 5 1 2 1 2 
+
+Time: 6500
+Input Queue Sizes: 0 12 4 25 5 12 9 64 
+Output Queue Sizes: 0 3 7 4 0 1 2 2 
+
+Time: 6550
+Input Queue Sizes: 0 12 4 26 0 13 9 64 
+Output Queue Sizes: 1 3 6 3 0 3 1 1 
+
+Time: 6600
+Input Queue Sizes: 0 8 4 27 0 13 9 64 
+Output Queue Sizes: 2 4 6 3 0 3 1 1 
+
+Time: 6651
+Input Queue Sizes: 0 4 4 28 0 14 9 64 
+Output Queue Sizes: 1 4 5 2 0 2 2 2 
+
+Time: 6701
+Input Queue Sizes: 0 1 4 28 0 15 9 64 
+Output Queue Sizes: 0 3 4 1 0 4 2 2 
+
+Time: 6751
+Input Queue Sizes: 0 1 4 29 0 12 9 64 
+Output Queue Sizes: 0 4 6 2 0 3 1 2 
+
+Time: 6801
+Input Queue Sizes: 0 1 4 30 0 9 9 64 
+Output Queue Sizes: 0 3 6 2 0 3 3 1 
+
+Time: 6851
+Input Queue Sizes: 0 0 4 30 0 6 9 64 
+Output Queue Sizes: 0 3 6 1 0 5 2 0 
+
+Time: 6902
+Input Queue Sizes: 0 0 4 31 0 3 9 64 
+Output Queue Sizes: 0 5 7 1 0 5 1 0 
+
+Time: 6952
+Input Queue Sizes: 0 0 4 32 0 0 9 64 
+Output Queue Sizes: 0 4 6 3 0 5 2 0 
+
+Time: 7002
+Input Queue Sizes: 0 0 1 33 0 0 9 64 
+Output Queue Sizes: 0 4 5 2 0 5 2 0 
+
+Time: 7053
+Input Queue Sizes: 0 0 0 33 0 0 7 64 
+Output Queue Sizes: 0 4 5 3 1 4 1 1 
+
+Time: 7103
+Input Queue Sizes: 0 0 0 34 0 0 4 64 
+Output Queue Sizes: 2 4 4 3 1 4 1 0 
+
+Time: 7153
+Input Queue Sizes: 0 0 0 35 0 0 1 64 
+Output Queue Sizes: 2 3 4 4 0 4 1 0 
+
+Time: 7203
 Input Queue Sizes: 0 0 0 34 0 0 0 64 
-Output Queue Sizes: 2 1 11 10 0 2 1 10 
+Output Queue Sizes: 1 3 4 6 0 3 1 0 
 
-Time: 5768
-Input Queue Sizes: 0 0 0 32 0 0 0 64 
-Output Queue Sizes: 1 1 11 10 0 3 1 10 
+Time: 7254
+Input Queue Sizes: 0 0 0 31 0 0 0 64 
+Output Queue Sizes: 2 3 3 6 1 3 0 0 
 
-Time: 5818
-Input Queue Sizes: 0 0 0 30 0 1 0 64 
-Output Queue Sizes: 1 1 11 10 0 3 2 9 
+Time: 7304
+Input Queue Sizes: 0 0 0 29 0 0 0 64 
+Output Queue Sizes: 1 2 4 6 0 4 0 0 
 
-Time: 5869
-Input Queue Sizes: 0 0 0 29 0 1 0 64 
-Output Queue Sizes: 1 0 11 10 0 3 2 9 
-
-Time: 5919
-Input Queue Sizes: 0 0 0 26 0 0 0 64 
-Output Queue Sizes: 1 2 11 10 0 2 2 8 
-
-Time: 5969
-Input Queue Sizes: 0 1 0 23 0 0 0 64 
-Output Queue Sizes: 1 3 10 11 0 1 2 7 
-
-Time: 6019
-Input Queue Sizes: 0 0 0 21 0 0 0 64 
-Output Queue Sizes: 1 3 9 12 0 3 1 7 
-
-Time: 6069
-Input Queue Sizes: 0 0 0 19 0 0 0 64 
-Output Queue Sizes: 1 4 9 11 0 3 2 6 
-
-Time: 6119
-Input Queue Sizes: 0 0 0 16 0 1 0 64 
-Output Queue Sizes: 0 4 9 11 0 3 2 6 
-
-Time: 6170
-Input Queue Sizes: 0 1 0 14 0 0 0 64 
-Output Queue Sizes: 0 3 8 11 0 5 2 6 
-
-Time: 6220
-Input Queue Sizes: 0 0 0 12 0 0 0 64 
-Output Queue Sizes: 0 5 9 12 0 4 1 5 
-
-Time: 6270
-Input Queue Sizes: 0 0 0 9 0 0 0 64 
-Output Queue Sizes: 0 4 9 12 1 5 1 4 
-
-Time: 6320
-Input Queue Sizes: 0 0 0 7 0 0 0 64 
-Output Queue Sizes: 0 3 9 12 0 7 0 5 
-
-Time: 6370
-Input Queue Sizes: 0 0 0 5 0 0 0 64 
-Output Queue Sizes: 0 3 9 12 2 7 0 4 
-
-Time: 6420
-Input Queue Sizes: 0 0 0 2 0 0 0 64 
-Output Queue Sizes: 0 3 8 13 1 8 0 4 
-
-Time: 6470
-Input Queue Sizes: 0 0 0 0 0 0 0 63 
-Output Queue Sizes: 0 2 9 13 0 9 0 4 
-
-Time: 6520
-Input Queue Sizes: 0 0 0 0 0 0 0 62 
-Output Queue Sizes: 0 2 10 12 3 8 0 3 
-
-Time: 6571
-Input Queue Sizes: 0 0 0 0 0 0 0 60 
-Output Queue Sizes: 0 1 9 13 3 8 0 3 
-
-Time: 6621
-Input Queue Sizes: 0 0 0 0 0 1 0 58 
-Output Queue Sizes: 0 2 9 12 2 9 1 3 
-
-Time: 6671
-Input Queue Sizes: 0 0 0 0 0 0 0 57 
-Output Queue Sizes: 0 4 9 11 3 8 1 3 
-
-Time: 6721
-Input Queue Sizes: 0 0 0 0 0 0 0 56 
-Output Queue Sizes: 0 3 9 12 4 7 0 2 
-
-Time: 6771
-Input Queue Sizes: 0 0 0 0 0 0 0 53 
-Output Queue Sizes: 2 2 8 12 3 9 0 2 
-
-Time: 6822
-Input Queue Sizes: 0 0 0 0 0 0 0 51 
-Output Queue Sizes: 2 2 8 11 4 9 0 3 
-
-Time: 6872
-Input Queue Sizes: 0 0 0 0 0 0 0 50 
-Output Queue Sizes: 1 4 7 11 3 8 0 3 
-
-Time: 6922
-Input Queue Sizes: 0 1 0 0 0 0 0 48 
-Output Queue Sizes: 2 3 7 11 2 8 1 3 
-
-Time: 6972
-Input Queue Sizes: 0 1 0 0 0 0 0 46 
-Output Queue Sizes: 2 3 7 11 3 8 0 3 
-
-Time: 7022
-Input Queue Sizes: 0 0 0 0 0 0 0 45 
-Output Queue Sizes: 1 2 6 12 3 8 0 4 
-
-Time: 7073
-Input Queue Sizes: 0 0 0 0 0 0 0 44 
-Output Queue Sizes: 1 1 5 13 2 9 1 4 
-
-Time: 7123
-Input Queue Sizes: 0 0 0 0 0 0 0 41 
-Output Queue Sizes: 0 1 5 12 3 9 2 4 
-
-Time: 7173
-Input Queue Sizes: 0 0 0 0 0 0 0 40 
-Output Queue Sizes: 0 0 4 14 3 9 3 3 
-
-Time: 7223
-Input Queue Sizes: 0 0 0 0 0 0 0 37 
-Output Queue Sizes: 0 1 3 13 2 9 3 4 
-
-Time: 7273
-Input Queue Sizes: 0 0 0 0 0 0 0 35 
-Output Queue Sizes: 0 2 3 13 2 9 3 4 
-
-Time: 7324
-Input Queue Sizes: 0 0 0 0 0 1 0 34 
-Output Queue Sizes: 0 1 3 14 2 8 5 3 
-
-Time: 7374
-Input Queue Sizes: 0 0 0 0 0 0 0 31 
-Output Queue Sizes: 0 0 5 13 2 8 4 3 
-
-Time: 7424
-Input Queue Sizes: 0 0 1 0 0 0 0 29 
-Output Queue Sizes: 0 2 5 12 2 7 4 4 
-
-Time: 7474
-Input Queue Sizes: 3 1 11 1 0 0 0 30 
-Output Queue Sizes: 0 3 5 12 2 7 4 3 
-
-Time: 7525
-Input Queue Sizes: 10 1 23 2 0 1 0 30 
-Output Queue Sizes: 0 3 4 12 1 8 3 4 
-
-Time: 7575
-Input Queue Sizes: 17 3 33 3 0 2 0 31 
-Output Queue Sizes: 0 3 4 11 2 9 3 4 
-
-Time: 7625
-Input Queue Sizes: 13 4 33 4 0 3 0 32 
-Output Queue Sizes: 0 2 3 11 2 8 6 4 
-
-Time: 7675
-Input Queue Sizes: 8 5 33 5 0 4 0 33 
-Output Queue Sizes: 0 2 3 11 1 8 6 4 
-
-Time: 7725
-Input Queue Sizes: 3 6 33 5 0 4 0 34 
-Output Queue Sizes: 0 2 4 11 2 7 5 4 
-
-Time: 7775
-Input Queue Sizes: 0 6 33 6 0 5 0 35 
-Output Queue Sizes: 0 2 4 11 1 7 6 3 
-
-Time: 7826
-Input Queue Sizes: 0 2 33 7 3 6 0 35 
-Output Queue Sizes: 1 1 3 11 0 7 5 5 
-
-Time: 7876
-Input Queue Sizes: 0 2 33 8 10 7 0 36 
-Output Queue Sizes: 1 2 4 10 1 6 5 4 
-
-Time: 7926
-Input Queue Sizes: 0 3 33 9 16 7 1 37 
-Output Queue Sizes: 1 2 5 10 1 5 5 4 
-
-Time: 7976
-Input Queue Sizes: 0 4 33 10 22 8 13 38 
-Output Queue Sizes: 1 1 4 9 0 6 6 5 
-
-Time: 8026
-Input Queue Sizes: 0 5 33 10 17 9 25 38 
-Output Queue Sizes: 1 1 4 8 2 6 5 5 
-
-Time: 8077
-Input Queue Sizes: 0 7 33 11 12 10 32 39 
-Output Queue Sizes: 2 0 4 9 2 5 6 4 
-
-Time: 8127
-Input Queue Sizes: 0 8 33 12 7 11 32 40 
-Output Queue Sizes: 4 0 3 8 1 5 5 6 
-
-Time: 8177
-Input Queue Sizes: 0 9 33 12 2 12 32 41 
-Output Queue Sizes: 3 0 3 7 2 5 5 6 
-
-Time: 8227
-Input Queue Sizes: 0 6 33 13 0 12 32 42 
-Output Queue Sizes: 4 0 3 8 2 4 5 6 
-
-Time: 8278
-Input Queue Sizes: 0 2 33 14 0 13 32 43 
-Output Queue Sizes: 3 0 2 7 1 4 6 8 
-
-Time: 8328
-Input Queue Sizes: 0 0 33 15 0 11 32 43 
-Output Queue Sizes: 3 1 3 7 2 3 5 7 
-
-Time: 8378
-Input Queue Sizes: 0 1 33 16 0 8 32 44 
-Output Queue Sizes: 3 1 2 8 2 3 5 7 
-
-Time: 8428
-Input Queue Sizes: 0 0 33 16 0 5 32 45 
-Output Queue Sizes: 3 0 1 7 2 3 5 9 
-
-Time: 8479
-Input Queue Sizes: 0 0 33 17 0 2 32 46 
-Output Queue Sizes: 2 2 2 7 2 2 5 8 
-
-Time: 8529
-Input Queue Sizes: 0 0 32 18 0 0 32 47 
-Output Queue Sizes: 2 1 1 7 4 2 6 7 
-
-Time: 8579
-Input Queue Sizes: 0 0 29 19 0 0 32 48 
-Output Queue Sizes: 2 0 0 6 4 3 6 8 
-
-Time: 8629
-Input Queue Sizes: 0 0 26 20 0 0 32 49 
-Output Queue Sizes: 1 0 1 6 4 3 6 7 
-
-Time: 8679
-Input Queue Sizes: 0 0 23 21 0 0 32 49 
-Output Queue Sizes: 3 0 0 7 4 3 6 6 
-
-Time: 8730
-Input Queue Sizes: 0 0 18 22 0 1 32 50 
-Output Queue Sizes: 2 0 0 6 5 4 5 6 
-
-Time: 8780
-Input Queue Sizes: 0 0 15 22 0 0 32 51 
-Output Queue Sizes: 2 0 0 5 7 4 5 5 
-
-Time: 8830
-Input Queue Sizes: 0 0 12 23 0 0 32 52 
-Output Queue Sizes: 3 0 0 5 7 5 5 4 
-
-Time: 8880
-Input Queue Sizes: 0 0 8 24 0 0 32 53 
-Output Queue Sizes: 2 0 0 4 7 5 6 4 
-
-Time: 8930
-Input Queue Sizes: 0 0 5 25 0 0 32 54 
-Output Queue Sizes: 1 0 2 3 8 4 5 5 
-
-Time: 8980
-Input Queue Sizes: 0 0 1 26 0 0 32 56 
-Output Queue Sizes: 1 0 1 3 8 4 7 5 
-
-Time: 9031
-Input Queue Sizes: 0 0 0 27 0 0 30 57 
-Output Queue Sizes: 1 0 0 4 7 5 6 6 
-
-Time: 9081
-Input Queue Sizes: 0 0 0 27 0 0 27 58 
-Output Queue Sizes: 0 0 1 3 7 4 7 6 
-
-Time: 9131
-Input Queue Sizes: 0 0 0 28 0 0 23 59 
-Output Queue Sizes: 0 0 0 3 7 3 10 5 
-
-Time: 9181
-Input Queue Sizes: 0 0 0 29 0 0 20 59 
-Output Queue Sizes: 0 1 0 2 6 5 10 5 
-
-Time: 9232
-Input Queue Sizes: 0 0 0 29 0 1 16 60 
-Output Queue Sizes: 0 0 1 2 6 4 11 4 
-
-Time: 9282
-Input Queue Sizes: 0 0 0 30 0 0 13 61 
-Output Queue Sizes: 1 0 2 2 5 5 11 3 
-
-Time: 9332
-Input Queue Sizes: 0 0 0 31 0 0 10 62 
-Output Queue Sizes: 1 1 1 1 4 6 10 4 
-
-Time: 9382
-Input Queue Sizes: 0 0 0 32 0 1 7 62 
-Output Queue Sizes: 1 1 2 0 4 5 9 4 
-
-Time: 9433
-Input Queue Sizes: 0 0 0 33 0 0 4 63 
-Output Queue Sizes: 1 1 3 0 4 5 10 3 
-
-Time: 9483
-Input Queue Sizes: 0 0 0 34 0 0 1 64 
-Output Queue Sizes: 0 1 3 0 3 6 10 3 
-
-Time: 9533
-Input Queue Sizes: 0 0 0 33 0 0 0 64 
-Output Queue Sizes: 0 1 3 0 4 5 11 2 
-
-Time: 9584
-Input Queue Sizes: 0 0 0 30 0 1 0 64 
-Output Queue Sizes: 2 1 3 0 3 4 12 1 
-
-Time: 9634
-Input Queue Sizes: 0 0 0 27 0 0 0 64 
-Output Queue Sizes: 2 2 2 0 3 4 11 1 
-
-Time: 9684
+Time: 7354
 Input Queue Sizes: 0 0 0 25 0 0 0 64 
-Output Queue Sizes: 2 2 2 1 3 4 10 1 
+Output Queue Sizes: 0 3 5 7 0 3 0 1 
 
-Time: 9734
+Time: 7404
 Input Queue Sizes: 0 0 0 23 0 0 0 64 
-Output Queue Sizes: 3 3 2 0 3 4 10 0 
+Output Queue Sizes: 0 3 5 7 0 2 0 2 
 
-Time: 9785
+Time: 7454
+Input Queue Sizes: 0 0 0 21 0 0 0 64 
+Output Queue Sizes: 0 2 4 8 0 4 0 1 
+
+Time: 7504
 Input Queue Sizes: 0 0 0 19 0 0 0 64 
-Output Queue Sizes: 3 2 2 0 3 5 9 1 
+Output Queue Sizes: 0 2 4 8 0 5 1 1 
 
-Time: 9835
-Input Queue Sizes: 0 1 0 17 0 0 0 64 
-Output Queue Sizes: 2 2 2 0 4 5 9 0 
+Time: 7554
+Input Queue Sizes: 0 0 0 16 0 0 0 64 
+Output Queue Sizes: 0 2 3 8 0 6 1 0 
 
-Time: 9885
-Input Queue Sizes: 0 0 0 15 0 0 0 64 
-Output Queue Sizes: 3 4 1 0 3 4 10 0 
+Time: 7604
+Input Queue Sizes: 0 0 0 14 0 0 0 64 
+Output Queue Sizes: 0 2 2 7 1 7 1 0 
 
-Time: 9935
+Time: 7654
 Input Queue Sizes: 0 0 0 13 0 0 0 64 
-Output Queue Sizes: 2 3 0 0 4 7 9 0 
+Output Queue Sizes: 0 2 3 7 0 6 1 2 
 
-Time: 9985
+Time: 7705
 Input Queue Sizes: 0 0 0 11 0 0 0 64 
-Output Queue Sizes: 2 2 1 0 6 6 9 0 
+Output Queue Sizes: 0 1 4 7 0 7 0 1 
 
-Time: 10035
-Input Queue Sizes: 0 0 0 8 0 0 0 64 
-Output Queue Sizes: 2 2 1 0 6 6 10 0 
+Time: 7755
+Input Queue Sizes: 0 1 0 7 0 0 0 64 
+Output Queue Sizes: 0 0 4 6 0 10 0 0 
 
-Time: 10085
-Input Queue Sizes: 0 0 0 6 0 0 0 64 
-Output Queue Sizes: 3 4 0 0 5 6 9 0 
+Time: 7805
+Input Queue Sizes: 0 1 0 4 0 0 0 64 
+Output Queue Sizes: 0 0 4 6 1 11 0 0 
 
-Time: 10136
+Time: 7855
+Input Queue Sizes: 0 1 0 2 0 0 0 64 
+Output Queue Sizes: 0 0 3 6 2 10 0 0 
+
+Time: 7905
+Input Queue Sizes: 0 0 0 0 0 1 0 64 
+Output Queue Sizes: 0 0 3 7 1 11 0 0 
+
+Time: 7955
+Input Queue Sizes: 0 0 0 0 0 0 0 62 
+Output Queue Sizes: 0 0 4 7 2 11 0 0 
+
+Time: 8005
+Input Queue Sizes: 0 0 0 0 0 0 6 63 
+Output Queue Sizes: 0 0 4 6 1 11 1 0 
+
+Time: 8056
+Input Queue Sizes: 0 0 0 1 0 0 15 64 
+Output Queue Sizes: 0 0 3 7 0 12 2 0 
+
+Time: 8106
+Input Queue Sizes: 0 0 0 2 0 0 20 64 
+Output Queue Sizes: 0 0 3 8 3 11 2 0 
+
+Time: 8156
+Input Queue Sizes: 0 0 0 3 0 0 16 64 
+Output Queue Sizes: 0 0 3 7 4 10 2 0 
+
+Time: 8206
+Input Queue Sizes: 0 0 0 4 0 0 13 64 
+Output Queue Sizes: 1 0 3 6 3 10 2 0 
+
+Time: 8256
+Input Queue Sizes: 0 0 0 4 0 0 10 64 
+Output Queue Sizes: 1 0 4 7 3 10 2 0 
+
+Time: 8307
+Input Queue Sizes: 0 0 0 5 0 0 6 64 
+Output Queue Sizes: 1 1 5 6 2 9 1 0 
+
+Time: 8357
+Input Queue Sizes: 0 0 0 6 0 0 3 64 
+Output Queue Sizes: 0 0 4 6 2 11 1 1 
+
+Time: 8407
+Input Queue Sizes: 0 0 7 7 0 0 3 64 
+Output Queue Sizes: 1 0 4 7 2 12 0 1 
+
+Time: 8458
+Input Queue Sizes: 0 0 16 8 0 0 3 64 
+Output Queue Sizes: 0 0 7 6 1 11 0 0 
+
+Time: 8508
+Input Queue Sizes: 0 0 22 9 0 0 3 64 
+Output Queue Sizes: 0 1 7 6 0 10 0 0 
+
+Time: 8558
+Input Queue Sizes: 0 0 19 10 0 0 3 64 
+Output Queue Sizes: 0 3 8 6 1 10 0 0 
+
+Time: 8608
+Input Queue Sizes: 0 0 16 10 0 0 3 64 
+Output Queue Sizes: 0 3 9 5 1 9 0 0 
+
+Time: 8658
+Input Queue Sizes: 0 0 12 12 0 0 3 64 
+Output Queue Sizes: 1 4 8 5 0 8 0 1 
+
+Time: 8708
+Input Queue Sizes: 0 0 9 12 0 0 3 64 
+Output Queue Sizes: 1 3 9 5 1 10 0 0 
+
+Time: 8758
+Input Queue Sizes: 0 0 6 13 0 0 3 64 
+Output Queue Sizes: 2 2 8 5 1 9 0 0 
+
+Time: 8809
+Input Queue Sizes: 0 0 2 14 0 0 3 64 
+Output Queue Sizes: 1 2 7 5 1 9 1 0 
+
+Time: 8859
+Input Queue Sizes: 0 0 0 15 0 0 2 64 
+Output Queue Sizes: 0 1 10 5 1 10 0 0 
+
+Time: 8909
+Input Queue Sizes: 0 0 0 15 0 0 0 64 
+Output Queue Sizes: 0 0 9 5 0 11 0 0 
+
+Time: 8959
+Input Queue Sizes: 0 0 0 12 0 0 0 64 
+Output Queue Sizes: 0 0 8 4 0 11 0 3 
+
+Time: 9010
+Input Queue Sizes: 0 0 0 10 0 0 0 64 
+Output Queue Sizes: 0 0 8 6 0 12 0 3 
+
+Time: 9060
+Input Queue Sizes: 0 1 0 7 0 0 0 64 
+Output Queue Sizes: 0 0 8 6 0 12 0 2 
+
+Time: 9110
+Input Queue Sizes: 0 0 0 5 0 0 0 64 
+Output Queue Sizes: 0 0 8 6 1 11 0 3 
+
+Time: 9160
+Input Queue Sizes: 0 0 0 5 6 1 0 64 
+Output Queue Sizes: 0 1 9 9 0 11 0 2 
+
+Time: 9210
+Input Queue Sizes: 0 1 0 6 13 2 0 64 
+Output Queue Sizes: 0 1 8 9 1 10 0 2 
+
+Time: 9260
+Input Queue Sizes: 0 2 0 6 18 3 0 64 
+Output Queue Sizes: 0 1 8 9 1 9 0 2 
+
+Time: 9311
+Input Queue Sizes: 0 3 0 7 13 3 0 64 
+Output Queue Sizes: 1 1 8 9 1 9 1 3 
+
+Time: 9361
+Input Queue Sizes: 0 3 0 8 8 4 0 64 
+Output Queue Sizes: 1 1 8 8 0 9 1 2 
+
+Time: 9411
+Input Queue Sizes: 0 4 0 9 3 5 0 64 
+Output Queue Sizes: 1 0 7 9 1 8 0 3 
+
+Time: 9462
+Input Queue Sizes: 0 3 0 10 0 6 0 64 
+Output Queue Sizes: 1 0 7 10 2 9 1 2 
+
+Time: 9512
+Input Queue Sizes: 0 0 0 11 0 6 0 64 
+Output Queue Sizes: 0 0 6 9 2 9 0 4 
+
+Time: 9562
+Input Queue Sizes: 0 0 0 11 0 3 0 64 
+Output Queue Sizes: 0 0 6 8 3 8 0 5 
+
+Time: 9612
+Input Queue Sizes: 0 0 0 11 0 1 0 64 
+Output Queue Sizes: 2 0 6 9 2 10 0 4 
+
+Time: 9662
+Input Queue Sizes: 0 0 0 8 0 1 0 64 
+Output Queue Sizes: 2 0 5 9 1 10 0 5 
+
+Time: 9712
+Input Queue Sizes: 0 0 0 7 0 0 0 64 
+Output Queue Sizes: 2 0 4 8 2 9 2 5 
+
+Time: 9762
+Input Queue Sizes: 0 0 0 5 0 0 0 64 
+Output Queue Sizes: 2 0 4 8 1 9 4 5 
+
+Time: 9813
 Input Queue Sizes: 0 0 0 3 0 0 0 64 
-Output Queue Sizes: 3 3 0 0 5 5 9 1 
+Output Queue Sizes: 3 0 4 7 1 8 4 4 
 
-Time: 10186
+Time: 9863
+Input Queue Sizes: 0 0 0 1 0 1 0 63 
+Output Queue Sizes: 3 0 3 6 3 8 3 4 
+
+Time: 9913
+Input Queue Sizes: 0 0 0 1 0 0 0 63 
+Output Queue Sizes: 4 0 3 6 3 10 3 3 
+
+Time: 9963
+Input Queue Sizes: 4 1 0 1 0 0 0 61 
+Output Queue Sizes: 4 0 4 5 3 10 3 2 
+
+Time: 10013
+Input Queue Sizes: 10 1 0 1 0 1 0 62 
+Output Queue Sizes: 3 0 5 4 3 10 2 3 
+
+Time: 10063
+Input Queue Sizes: 17 2 0 2 0 2 0 63 
+Output Queue Sizes: 3 0 5 5 2 11 3 3 
+
+Time: 10113
+Input Queue Sizes: 15 3 0 3 0 4 0 63 
+Output Queue Sizes: 3 0 4 4 2 10 4 4 
+
+Time: 10164
+Input Queue Sizes: 10 4 0 4 0 5 0 64 
+Output Queue Sizes: 2 0 3 3 3 10 5 5 
+
+Time: 10214
+Input Queue Sizes: 5 5 0 4 0 6 0 64 
+Output Queue Sizes: 3 0 4 3 3 10 5 5 
+
+Time: 10264
+Input Queue Sizes: 0 6 0 5 0 6 0 64 
+Output Queue Sizes: 3 0 5 3 3 9 5 4 
+
+Time: 10314
+Input Queue Sizes: 0 1 0 6 0 7 0 64 
+Output Queue Sizes: 3 0 5 3 3 9 5 4 
+
+Time: 10364
+Input Queue Sizes: 0 0 0 7 0 5 0 64 
+Output Queue Sizes: 5 1 5 3 2 9 5 3 
+
+Time: 10414
+Input Queue Sizes: 0 0 0 8 0 2 0 64 
+Output Queue Sizes: 5 0 4 2 4 9 5 2 
+
+Time: 10465
+Input Queue Sizes: 0 0 0 7 0 0 0 64 
+Output Queue Sizes: 4 1 3 1 4 10 5 3 
+
+Time: 10515
+Input Queue Sizes: 0 0 0 5 0 0 0 64 
+Output Queue Sizes: 4 1 4 1 4 10 6 2 
+
+Time: 10565
+Input Queue Sizes: 0 0 0 2 0 0 0 64 
+Output Queue Sizes: 3 0 4 1 4 10 7 1 
+
+Time: 10615
 Input Queue Sizes: 0 0 0 1 0 0 0 64 
-Output Queue Sizes: 4 3 0 1 4 4 10 0 
+Output Queue Sizes: 2 2 3 0 5 9 7 1 
 
-Time: 10236
-Input Queue Sizes: 0 0 0 0 0 1 0 62 
-Output Queue Sizes: 3 3 0 2 3 4 11 0 
+Time: 10665
+Input Queue Sizes: 0 1 0 1 0 0 0 62 
+Output Queue Sizes: 3 2 5 0 5 9 6 0 
 
-Time: 10286
+Time: 10715
 Input Queue Sizes: 0 0 0 0 0 0 0 61 
-Output Queue Sizes: 2 3 0 3 4 4 10 0 
+Output Queue Sizes: 4 1 5 0 5 9 6 0 
 
-Time: 10336
+Time: 10766
+Input Queue Sizes: 0 0 0 0 0 0 9 61 
+Output Queue Sizes: 3 1 6 0 5 9 6 0 
+
+Time: 10816
+Input Queue Sizes: 0 0 0 1 0 0 18 61 
+Output Queue Sizes: 4 0 7 0 4 9 7 0 
+
+Time: 10866
+Input Queue Sizes: 0 0 0 2 0 0 26 62 
+Output Queue Sizes: 3 0 8 0 5 8 7 0 
+
+Time: 10916
+Input Queue Sizes: 0 0 0 3 0 0 23 63 
+Output Queue Sizes: 2 0 7 1 6 7 7 0 
+
+Time: 10967
+Input Queue Sizes: 0 0 0 4 0 0 20 64 
+Output Queue Sizes: 3 2 7 0 6 7 7 0 
+
+Time: 11017
+Input Queue Sizes: 0 0 0 4 0 1 16 64 
+Output Queue Sizes: 3 1 7 1 5 7 8 0 
+
+Time: 11067
+Input Queue Sizes: 0 0 0 5 0 1 13 64 
+Output Queue Sizes: 2 2 7 1 5 6 7 0 
+
+Time: 11117
+Input Queue Sizes: 0 1 0 6 0 0 9 64 
+Output Queue Sizes: 2 2 7 1 4 8 8 0 
+
+Time: 11168
+Input Queue Sizes: 0 0 0 7 0 0 6 64 
+Output Queue Sizes: 2 2 6 3 3 7 9 0 
+
+Time: 11218
+Input Queue Sizes: 0 0 0 9 0 0 3 64 
+Output Queue Sizes: 1 3 5 4 3 6 9 0 
+
+Time: 11268
+Input Queue Sizes: 0 0 0 9 0 0 0 64 
+Output Queue Sizes: 1 3 7 4 2 6 10 0 
+
+Time: 11318
+Input Queue Sizes: 0 0 0 7 0 0 0 64 
+Output Queue Sizes: 1 4 6 4 2 5 10 0 
+
+Time: 11368
+Input Queue Sizes: 0 0 0 3 0 1 0 64 
+Output Queue Sizes: 1 3 5 4 2 4 12 0 
+
+Time: 11418
+Input Queue Sizes: 0 0 0 1 0 0 0 64 
+Output Queue Sizes: 2 4 5 4 2 4 11 0 
+
+Time: 11469
+Input Queue Sizes: 0 0 0 0 0 0 0 64 
+Output Queue Sizes: 2 4 4 5 2 3 11 0 
+
+Time: 11519
+Input Queue Sizes: 0 0 0 0 0 0 0 62 
+Output Queue Sizes: 1 3 4 5 3 3 10 0 
+
+Time: 11569
+Input Queue Sizes: 0 0 0 0 0 0 0 59 
+Output Queue Sizes: 1 3 6 4 3 4 9 0 
+
+Time: 11619
 Input Queue Sizes: 0 1 0 0 0 0 0 59 
-Output Queue Sizes: 2 3 0 4 3 3 11 1 
+Output Queue Sizes: 2 3 5 4 2 3 10 1 
 
-Time: 10386
-Input Queue Sizes: 0 0 0 0 0 0 0 58 
-Output Queue Sizes: 2 2 0 4 3 4 10 0 
+Time: 11669
+Input Queue Sizes: 0 1 0 0 0 0 0 57 
+Output Queue Sizes: 2 3 4 3 4 3 9 0 
 
-Time: 10436
-Input Queue Sizes: 0 0 0 0 0 0 0 56 
-Output Queue Sizes: 2 3 1 3 3 3 9 1 
+Time: 11719
+Input Queue Sizes: 0 0 0 0 0 0 0 55 
+Output Queue Sizes: 3 3 5 2 4 5 8 0 
 
-Time: 10487
-Input Queue Sizes: 0 0 0 0 0 0 0 54 
-Output Queue Sizes: 2 3 0 4 2 4 9 2 
+Time: 11770
+Input Queue Sizes: 0 0 3 0 2 0 0 55 
+Output Queue Sizes: 3 3 4 2 3 4 10 0 
 
-Time: 10537
-Input Queue Sizes: 0 0 0 0 0 0 0 53 
-Output Queue Sizes: 1 6 0 4 1 4 8 1 
+Time: 11820
+Input Queue Sizes: 0 1 15 1 9 1 0 56 
+Output Queue Sizes: 2 3 3 4 3 3 9 1 
 
-Time: 10587
-Input Queue Sizes: 0 0 0 1 0 0 0 52 
-Output Queue Sizes: 1 5 0 4 2 3 7 2 
+Time: 11870
+Input Queue Sizes: 0 2 28 2 17 2 0 57 
+Output Queue Sizes: 3 4 3 4 3 4 8 0 
+
+Time: 11920
+Input Queue Sizes: 0 2 34 3 15 3 0 57 
+Output Queue Sizes: 3 3 3 5 3 4 8 0 
 

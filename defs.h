@@ -50,7 +50,7 @@ public:
 };
 
 class VOQBuffer{
-    int capacity = BUFFER_CAPACITY/NUM_QUEUES;
+    int capacity = BUFFER_CAPACITY;
     int size = 0;
     std::mutex sizeMutex;
     std::queue<Packet*> bufferQueue[NUM_QUEUES];

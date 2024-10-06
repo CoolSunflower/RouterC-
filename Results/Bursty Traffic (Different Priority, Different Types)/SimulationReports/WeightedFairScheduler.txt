@@ -1,57 +1,57 @@
 
 ----- Simulation Results -----
 == General Statistics ==
-Total Packets Generated: 799
-Total Packets Successfully Transmitted: 653
-Total Packets Dropped: 146
+Total Packets Generated: 724
+Total Packets Successfully Transmitted: 549
+Total Packets Dropped: 175
 
 == Queue Throughput ==
-Combined Router Throughput: 65.3 Packets/Second 
+Combined Router Throughput: 54.9 Packets/Second 
 Queue Throughput for each Input Queue: 
-Queue 0: 10.1 Packets/Second 
-Queue 1: 11.3 Packets/Second 
-Queue 2: 4.8 Packets/Second 
-Queue 3: 5.2 Packets/Second 
-Queue 4: 10.5 Packets/Second 
-Queue 5: 11.8 Packets/Second 
-Queue 6: 6.3 Packets/Second 
-Queue 7: 5.3 Packets/Second 
+Queue 0: 9.7 Packets/Second 
+Queue 1: 8.8 Packets/Second 
+Queue 2: 4.4 Packets/Second 
+Queue 3: 4.6 Packets/Second 
+Queue 4: 8.4 Packets/Second 
+Queue 5: 9.9 Packets/Second 
+Queue 6: 5.8 Packets/Second 
+Queue 7: 3.3 Packets/Second 
 
 == Turnaround Time ==
-Average Turnaround Time: 1959.34 ms 
+Average Turnaround Time: 3019.73 ms 
 Turnaround Time for Each Input Queue: 
-Queue 0: 1451.08 ms 
-Queue 1: 1238.67 ms 
-Queue 2: 3828.1 ms 
-Queue 3: 3804.63 ms 
-Queue 4: 1328.55 ms 
-Queue 5: 1080.42 ms 
-Queue 6: 2889.6 ms 
-Queue 7: 3062.17 ms 
+Queue 0: 1021.47 ms 
+Queue 1: 2715.08 ms 
+Queue 2: 5555.5 ms 
+Queue 3: 3994.17 ms 
+Queue 4: 2934.85 ms 
+Queue 5: 2849.52 ms 
+Queue 6: 3521.47 ms 
+Queue 7: 4811.36 ms 
 
 == Waiting Time ==
-Average Waiting Time: 1774.41 ms 
+Average Waiting Time: 2875.87 ms 
 Waiting Time for Each Input Queue: 
-Queue 0: 1271.49 ms 
-Queue 1: 1039.01 ms 
-Queue 2: 3638.83 ms 
-Queue 3: 3591.67 ms 
-Queue 4: 1152.19 ms 
-Queue 5: 890.881 ms 
-Queue 6: 2712.76 ms 
-Queue 7: 2913.62 ms 
+Queue 0: 880.639 ms 
+Queue 1: 2577.47 ms 
+Queue 2: 5403.89 ms 
+Queue 3: 3868.35 ms 
+Queue 4: 2760.96 ms 
+Queue 5: 2708.41 ms 
+Queue 6: 3377.52 ms 
+Queue 7: 4695.42 ms 
 
 == Buffer Occupancy ==
 For continous input and output buffer occupancy data, see corresponding file in Simulation Output
 
 == Packet Drop Rates ==
-Percentage of Total Packets Dropped: 18.2728%
+Percentage of Total Packets Dropped: 24.1713%
 Percentage of Packets Dropped for each Input Queue: 
 Queue 0: 0%
-Queue 1: 0%
-Queue 2: 40%
-Queue 3: 49.5146%
+Queue 1: 16.9811%
+Queue 2: 22.807%
+Queue 3: 56.1905%
 Queue 4: 0%
-Queue 5: 0%
-Queue 6: 14.8649%
-Queue 7: 49.5238%
+Queue 5: 4.80769%
+Queue 6: 15.942%
+Queue 7: 67.6471%
