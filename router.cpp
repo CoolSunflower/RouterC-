@@ -28,7 +28,7 @@
 
     P2: Add support for Buffers, Metrics, Flow Types DONE
 
-    P3: Priority and Weighted Fair Scheduling Algorithms
+    P3: Priority and Weighted Fair Scheduling Algorithms DONE
 
     P4: iSlip Algorithm
 
@@ -51,8 +51,11 @@
 
         - Calculate Metrics in another file DONE
         - Priority Scheduler DONE
+        - Weighted Fair Scheduler DONE
 
-        - Weighted Fair Scheduler
+        - iSLIP Scheduler: DONE
+            - major scheduler code DONE
+            - add VOQ DONE
 
         - ...
         - do I really need a pid?
@@ -82,12 +85,14 @@
 #include <fstream>
 #include <vector>
 #include <random>
+#include "const.h"
 #include "defs.h"
 using namespace std;
 
 // Global Variables
-mutex inputMutex[8];     // Input queue mutexes <-- will be used when scheduler implemented 
-mutex outputMutex[8];    // Output queue mutexes <-- will be used when scheduler implemented
+mutex inputMutex[NUM_QUEUES];     // Input queue mutexes <-- will be used when scheduler implemented 
+mutex inputMutexVOQ[NUM_QUEUES][NUM_QUEUES]; // used for VOQ required in iSLIP algorithm
+mutex outputMutex[NUM_QUEUES];    // Output queue mutexes <-- will be used when scheduler implemented
 std::atomic<bool> stop_threads(false);
 int pid = 0;             // packet id's
 mutex pidMutex;
@@ -95,6 +100,8 @@ mutex pidMutex;
 // Actually we want to maintain all packets!
 map<int, Packet*> allPackets;
 std::chrono::system_clock::time_point startTime;
+int scheduler_choice;
+mutex consoleMutex;
 
 int main(int argc, char* argv[]){
     startTime = std::chrono::system_clock::now();
@@ -103,7 +110,6 @@ int main(int argc, char* argv[]){
     Router *router = new Router;
 
     // Create & Detach appropriate Scheduler thread
-    int scheduler_choice;
     cout << "Select Scheduler:\n1. Priority Scheduling\n2. Weighted Fair Queuing\n3. Round Robin\n4. iSLIP\n";
     cin >> scheduler_choice;
     if(scheduler_choice == 1){
@@ -116,7 +122,8 @@ int main(int argc, char* argv[]){
         thread scheduler(RoundRobinScheduler, router);
         scheduler.detach();
     }else if(scheduler_choice == 4){
-        cout << "wait\n";
+        thread scheduler(iSLIPScheduler, router);
+        scheduler.detach();
     }else{
         cout << "Invalid Choice. Exiting...\n";
         return 1;
@@ -186,7 +193,7 @@ void PriorityScheduler(Router* router){
         Packet* pkt = router->removeFromInputQueue(selectedQueue);
 
         // Sleep to simulate switching fabric delay
-        this_thread::sleep_for(chrono::milliseconds(10));
+        this_thread::sleep_for(chrono::milliseconds(SWITCH_DELAY));
 
         // Send to Corrent Output Queue
         router->sendToOutputQueue(pkt->outputPort, pkt);
@@ -223,7 +230,7 @@ void WeightedFairScheduler(Router* router){
         Packet* pkt = router->removeFromInputQueue(selectedQueue);
 
         // Sleep to simulate switching fabric delay
-        this_thread::sleep_for(chrono::milliseconds(10));
+        this_thread::sleep_for(chrono::milliseconds(SWITCH_DELAY));
 
         // Send to Corrent Output Queue
         router->sendToOutputQueue(pkt->outputPort, pkt);
@@ -239,7 +246,7 @@ void RoundRobinScheduler(Router* router){
         Packet* pkt = router->removeFromInputQueue(currQueue);
 
         // Sleep to simulate switching fabric delay
-        this_thread::sleep_for(chrono::milliseconds(10));
+        this_thread::sleep_for(chrono::milliseconds(SWITCH_DELAY));
 
         // Send to Corrent Output Queue
         router->sendToOutputQueue(pkt->outputPort, pkt);
@@ -249,13 +256,91 @@ void RoundRobinScheduler(Router* router){
     }
 }
 
+void iSLIPScheduler(Router* router){
+    // Round-robin pointers for inputs and outputs
+    std::vector<int> inputPointers(NUM_QUEUES, 0);
+    std::vector<int> outputPointers(NUM_QUEUES, 0);
+
+    while (!stop_threads.load()) {
+        std::vector<int> grantedOutputs(NUM_QUEUES, -1); // Track which output has granted to which input
+        std::vector<int> acceptedInputs(NUM_QUEUES, -1); // Track which input has accepted which output
+
+        // Step 1: Request Phase
+        // Each input requests to all outputs for which it has packets queued
+        std::vector<std::vector<bool>> requests(NUM_QUEUES, std::vector<bool>(NUM_QUEUES, false));
+        for (int i = 0; i < NUM_QUEUES; i++) {
+            for (int j = 0; j < NUM_QUEUES; j++) {
+                if(!router->VOQInput[i].empty(j)){
+                    requests[i][j] = true;
+                }
+            }
+        }
+
+        // Step 2: Grant Phase
+        // Each output reviews the requests and grants to one input
+        for (int j = 0; j < NUM_QUEUES; j++) {
+            for (int i = 0; i < NUM_QUEUES; i++) {
+                int inputIndex = (outputPointers[j] + i) % NUM_QUEUES;
+                if (requests[inputIndex][j]) {
+                    grantedOutputs[j] = inputIndex;  // Output j grants to inputIndex
+                    break;
+                }
+            }
+        }
+
+        // Step 3: Accept Phase
+        // Each input that received one or more grants selects one output
+        for (int i = 0; i < NUM_QUEUES; i++) {
+            // Round Robin for input pointers
+            for (int j = 0; j < NUM_QUEUES; j++) {
+                int outputIndex = (inputPointers[i] + j) % NUM_QUEUES;
+                if (grantedOutputs[outputIndex] == i) {
+                    acceptedInputs[i] = outputIndex;  // Input i accepts output outputIndex
+                    break;
+                }else{
+                    acceptedInputs[i] = -1;
+                }
+            }
+        }
+
+        // Packet Transfer based on accepted grants
+        for (int i = 0; i < NUM_QUEUES; i++) {
+            if (acceptedInputs[i] != -1) {
+                int selectedOutput = acceptedInputs[i];
+                
+                // Remove packet from input queue and send to output queue
+                Packet* pkt = router->removeFromInputQueueVOQ(i, selectedOutput);
+
+                if (pkt) {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(SWITCH_DELAY));  // Simulate switching delay
+                    router->sendToOutputQueue(selectedOutput, pkt);
+
+                    // Update the round-robin pointer only if grant was accepted
+                    inputPointers[i] = (inputPointers[i] + 1) % NUM_QUEUES;
+                    outputPointers[selectedOutput] = (outputPointers[selectedOutput] + 1) % NUM_QUEUES;
+                }
+            }
+        }
+
+        // Small sleep to avoid busy-waiting
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }}
+
 void sendToQueue(Router * router, int inputQueueNumber){
     while(!stop_threads.load()){
         // The sleep pattern and priority will depend on the queue number
-        if((inputQueueNumber == 0) || (inputQueueNumber == 4)){ // Bursty High Priority Data
+        if((inputQueueNumber == 0) || (inputQueueNumber == 4) || (inputQueueNumber == 2) || (inputQueueNumber == 6) ){ // Bursty Traffic
             // Sample Number of packets to be sent in burst
             int numPackets = BURST_LOW + rand()%(BURST_HIGH - BURST_LOW + 1);
-            int priority = 0; // (lower is higher)
+
+            int priority;
+            if((inputQueueNumber == 0) || (inputQueueNumber == 4)){
+                // High priority traffic
+                priority = 0; // (lower is higher)
+            }else if((inputQueueNumber == 2) || (inputQueueNumber == 6)){
+                // Low priority traffic
+                priority = 1; 
+            }
 
             // Allocate that many PIDs
             pidMutex.lock();
@@ -272,56 +357,25 @@ void sendToQueue(Router * router, int inputQueueNumber){
                 // Push to Router
                 router->addToInputQueue(inputQueueNumber, currPacket);
 
-                // Sleep for 5-10 ms before sending another packet to this queue
-                this_thread::sleep_for(chrono::milliseconds(5 + ( std::rand() % ( 10 - 5 + 1 ) ))); 
+                // Sleep for 3-5 ms before sending another packet to this queue
+                this_thread::sleep_for(chrono::milliseconds(3 + ( std::rand() % ( 5 - 3 + 1 ) ))); 
             }
             
-            // Sleep for 2-5 seconds between bursts
-            this_thread::sleep_for(chrono::milliseconds(2000 + ( std::rand() % ( 5000 - 2000 + 1 ) ))); 
-        }else if((inputQueueNumber == 1) || (inputQueueNumber == 5)){ // Uniform High Priority Traffic
+            // Sleep for 2.5-4 seconds between bursts
+            this_thread::sleep_for(chrono::milliseconds(2500 + ( std::rand() % ( 4000 - 2500 + 1 ) ))); 
+        }else if((inputQueueNumber == 1) || (inputQueueNumber == 5) || (inputQueueNumber == 3) || (inputQueueNumber == 7)){ // Uniform Traffic
             pidMutex.lock();
             int currPID = ++pid;
             pidMutex.unlock();
-            int priority = 0;
 
-            Packet* currPacket = new Packet(currPID, priority, getTime(), inputQueueNumber, rand()%8);
-            allPackets.emplace(currPID, currPacket);
-
-            router->addToInputQueue(inputQueueNumber, currPacket);
-
-            // Sleep for 40-80 ms to simulate constant traffic
-            this_thread::sleep_for(chrono::milliseconds(40 + rand()%(80 - 40 + 1)));
-        }else if((inputQueueNumber == 2) || (inputQueueNumber == 6)){ // Bursty Low Priority Traffic
-            // Sample Number of packets to be sent in burst
-            int numPackets = BURST_LOW + rand()%(BURST_HIGH - BURST_LOW + 1);
-            int priority = 1; 
-
-            // Allocate that many PIDs
-            pidMutex.lock();
-            int basePID = pid + 1;
-            int maxPID = pid + numPackets;
-            pid += numPackets;
-            pidMutex.unlock();
-
-            // Create & Send numPackets packets
-            for(int i = basePID; i <= maxPID; i++){
-                Packet* currPacket = new Packet(i, priority, getTime(), inputQueueNumber, rand()%8);
-                allPackets.emplace(i, currPacket);
-
-                // Push to Router
-                router->addToInputQueue(inputQueueNumber, currPacket);
-
-                // Sleep for 5-10 ms before sending another packet to this queue
-                this_thread::sleep_for(chrono::milliseconds(5 + ( std::rand() % ( 10 - 5 + 1 ) ))); 
+            int priority;
+            if((inputQueueNumber == 1) || (inputQueueNumber == 5)){
+                // High priority traffic
+                priority = 0; // (lower is higher)
+            }else if((inputQueueNumber == 3) || (inputQueueNumber == 7)){
+                // Low priority traffic
+                priority = 1; 
             }
-            
-            // Sleep for 2-5 seconds between bursts
-            this_thread::sleep_for(chrono::milliseconds(2000 + ( std::rand() % ( 5000 - 2000 + 1 ) )));             
-        }else if((inputQueueNumber == 3) || (inputQueueNumber == 7)){ // Uniform Low Priority Traffic
-            pidMutex.lock();
-            int currPID = ++pid;
-            pidMutex.unlock();
-            int priority = 1;
 
             Packet* currPacket = new Packet(currPID, priority, getTime(), inputQueueNumber, rand()%8);
             allPackets.emplace(currPID, currPacket);
@@ -357,15 +411,50 @@ Packet* Buffer::front(){
     return this->bufferQueue.front();
 }
 
+int VOQBuffer::push(Packet* pkt, int outputIndex){
+    if(this->full()){ return 0; } // Packet dropping for this input port
+    this->bufferQueue[outputIndex].push(pkt);
+    this->sizeMutex.lock();
+    this->size++;
+    this->sizeMutex.unlock();
+    return pkt->id;
+}
+
+void VOQBuffer::pop(int outputIndex){
+    this->bufferQueue[outputIndex].pop();
+    this->sizeMutex.lock();
+    this->size--;
+    this->sizeMutex.unlock();
+}
+
+Packet* VOQBuffer::front(int outputIndex){
+    return this->bufferQueue[outputIndex].front();
+}
+
 int Router::addToInputQueue(int inputQueueNumber, Packet* pkt){
+    if(scheduler_choice == 4){
+        // for iSLIP algorithm we need to use VOQ
+        inputMutexVOQ[inputQueueNumber][pkt->outputPort].lock();
+        int ret = this->VOQInput[inputQueueNumber].push(pkt, pkt->outputPort);
+        inputMutexVOQ[inputQueueNumber][pkt->outputPort].unlock();
+        if(ret == 0){
+            consoleMutex.lock();
+            cout << *pkt;
+            consoleMutex.unlock();
+            delete pkt;
+        }
+        return ret;
+    }
+    // for other algorithms normal procedure is followed
     inputMutex[inputQueueNumber].lock();
     int ret = this->input[inputQueueNumber].push(pkt);
-    // this->input[inputQueueNumber].push(*pkt);
     inputMutex[inputQueueNumber].unlock();
     if(ret == 0){
         // if packet was dropped, we need to print its information for tracking
         // since it was never added to input queue, this info will never be printed
+        consoleMutex.lock();
         cout << *pkt;
+        consoleMutex.unlock();
         delete pkt;
     }
     return ret;
@@ -391,7 +480,9 @@ void Router::removeFromOutputQueue(int outputQueueNumber){
         it->second->sentTime = getTime();
 
         // to avoid unnecessary storage, we can store the information of the packet in a file and delete it
+        consoleMutex.lock();
         cout << *it->second;
+        consoleMutex.unlock();
         Packet* pktptr = it->second;
         allPackets.erase(it);
         delete pktptr;
@@ -414,8 +505,22 @@ Packet* Router::removeFromInputQueue(int inputQueueNumber){
     return pkt;
 }
 
+Packet* Router::removeFromInputQueueVOQ(int inputQueueNumber, int outputIndex){
+    while(this->VOQInput[inputQueueNumber].empty(outputIndex));
+
+    inputMutexVOQ[inputQueueNumber][outputIndex].lock();
+    Packet* pkt = this->VOQInput[inputQueueNumber].front(outputIndex);
+    this->VOQInput[inputQueueNumber].pop(outputIndex);
+    if(allPackets.find(pkt->id) != allPackets.end()){
+        allPackets.find(pkt->id)->second->startProcessingTime = getTime();
+    }
+    inputMutexVOQ[inputQueueNumber][outputIndex].unlock();
+
+    return pkt;
+}
+
 ostream &operator<<(ostream &os, Packet const &pkt) { 
-    return os << pkt.id << " " << pkt.priority << " " << pkt.inputPort << " " << pkt.outputPort << " " << pkt.arrivalTime << " " << pkt.startProcessingTime << " " << pkt.sentTime << "\n";
+    return os << pkt.id << " " << pkt.priority << " " << pkt.inputPort << " " << pkt.outputPort << " " << pkt.arrivalTime << " " << pkt.startProcessingTime << " " << pkt.sentTime << " \n";
 }
 
 void trackSize(Router* router){
@@ -433,7 +538,11 @@ void trackSize(Router* router){
         std::vector<int> currentOutputSizes;
 
         for (int i = 0; i < NUM_QUEUES; i++) {
-            currentInputSizes.push_back(router->input[i].getSize());
+            if(scheduler_choice == 4){
+                currentInputSizes.push_back(router->VOQInput[i].getSize());
+            }else{
+                currentInputSizes.push_back(router->input[i].getSize());
+            }
         }
 
         for (int i = 0; i < NUM_QUEUES; i++) {
@@ -469,10 +578,5 @@ int getTime(){
     std::chrono::system_clock::time_point endTime = std::chrono::system_clock::now();
     auto elapsedTimeMillis = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
     return elapsedTimeMillis;
-}
-
-void printTransmitted(vector<Packet>* packets){
-    for(auto pkt: *packets)
-        cout << pkt;
 }
 

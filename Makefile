@@ -7,8 +7,7 @@ SRC = router.cpp
 METRICSSRC = metrics.cpp
 
 all: $(TARGET)
-	./$(TARGET)
-	./$(METRICS)
+	make run
 
 $(TARGET): $(SRC)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRC)
@@ -17,3 +16,12 @@ $(TARGET): $(SRC)
 clean:
 	rm -f $(TARGET)
 	rm -f $(METRICS)
+
+SIMULATIONP = ./$(TARGET)
+
+run:
+	@while ! $(SIMULATIONP); do \
+		echo "Randomised Fault, Rerunning..."; \
+	done
+	@echo "Succesful Simulation.";\
+	./$(METRICS)

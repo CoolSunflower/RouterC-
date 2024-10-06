@@ -6,6 +6,7 @@
 #include <queue>
 #include <iostream>
 #include <vector>
+#include <mutex>
 #include "const.h"
 
 // Classes & Typedefs
@@ -49,10 +50,28 @@ public:
     inline int getSize() const { return size; } 
 };
 
+class VOQBuffer{
+    int capacity = BUFFER_CAPACITY/NUM_QUEUES;
+    int size = 0;
+    std::mutex sizeMutex;
+    std::queue<Packet*> bufferQueue[NUM_QUEUES];
+
+public:
+    int push(Packet*, int);
+    void pop(int);
+    Packet* front(int);
+    inline bool full() const { return size == capacity; }
+    inline bool empty() const { return size == 0; }
+    inline bool empty(int i) const { return bufferQueue[i].empty(); }
+    inline int getSize() const { return size; }
+    inline int getSize(int i) const { return bufferQueue[i].size(); }
+};
+
 class Router{
 public:
     Buffer input[NUM_QUEUES];
     Buffer output[NUM_QUEUES];
+    VOQBuffer VOQInput[NUM_QUEUES]; // needed for iSLIP algorithm
 
     // Link layer functions
     int addToInputQueue(int, Packet*);
@@ -61,6 +80,9 @@ public:
     // Scheduler functions
     Packet* removeFromInputQueue(int);
     int sendToOutputQueue(int, Packet*);
+
+    // for iSLIP need removeFromInputQueueVOQ
+    Packet* removeFromInputQueueVOQ(int, int);
 };
 
 // Utility Functions
@@ -78,5 +100,6 @@ void removeFromQueue(Router*, int);
 void PriorityScheduler(Router*);
 void RoundRobinScheduler(Router*);
 void WeightedFairScheduler(Router*);
+void iSLIPScheduler(Router*);
 
 #endif //DEFS_H_
