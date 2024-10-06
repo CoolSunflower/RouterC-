@@ -1,0 +1,57 @@
+
+----- Simulation Results -----
+== General Statistics ==
+Total Packets Generated: 979
+Total Packets Successfully Transmitted: 979
+Total Packets Dropped: 0
+
+== Queue Throughput ==
+Combined Router Throughput: 97.9 Packets/Second 
+Queue Throughput for each Input Queue: 
+Queue 0: 12.3 Packets/Second 
+Queue 1: 12 Packets/Second 
+Queue 2: 12.3 Packets/Second 
+Queue 3: 12.7 Packets/Second 
+Queue 4: 12.2 Packets/Second 
+Queue 5: 11.9 Packets/Second 
+Queue 6: 12.1 Packets/Second 
+Queue 7: 12.4 Packets/Second 
+
+== Turnaround Time ==
+Average Turnaround Time: 1299.26 ms 
+Turnaround Time for Each Input Queue: 
+Queue 0: 1236.2 ms 
+Queue 1: 1356.2 ms 
+Queue 2: 1248.87 ms 
+Queue 3: 1187.09 ms 
+Queue 4: 1343.25 ms 
+Queue 5: 1478.7 ms 
+Queue 6: 1337.29 ms 
+Queue 7: 1219.01 ms 
+
+== Waiting Time ==
+Average Waiting Time: 1283.53 ms 
+Waiting Time for Each Input Queue: 
+Queue 0: 1194.4 ms 
+Queue 1: 1337.22 ms 
+Queue 2: 1236.27 ms 
+Queue 3: 1176.57 ms 
+Queue 4: 1332.48 ms 
+Queue 5: 1468.18 ms 
+Queue 6: 1326.88 ms 
+Queue 7: 1208.76 ms 
+
+== Buffer Occupancy ==
+For continous input and output buffer occupancy data, see corresponding file in Simulation Output
+
+== Packet Drop Rates ==
+Percentage of Total Packets Dropped: 0%
+Percentage of Packets Dropped for each Input Queue: 
+Queue 0: 0%
+Queue 1: 0%
+Queue 2: 0%
+Queue 3: 0%
+Queue 4: 0%
+Queue 5: 0%
+Queue 6: 0%
+Queue 7: 0%

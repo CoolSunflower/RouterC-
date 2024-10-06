@@ -90,6 +90,12 @@ std::chrono::system_clock::time_point startTime;// startTime is used by getTime(
 int scheduler_choice;                           // global scheduler choice used to take scheduler specific actions, if any
 mutex consoleMutex;                             // console mutex ig understandable
 string queueFileName;                           // File name to store buffer tracking data
+int typeOfSimulation = 1;                       // Uniform, Non-Uniform or Bursty
+/*
+    0 = Uniform Simulation --> All Input Queues receive same priority uniform rate data
+    1 = Non-Uniform Simulation --> Different Priorities Uniform Traffic
+    2 = Bursty Simulation --> Different Queues recieve different types (uniform v/s bursty) and different priority data
+*/
 
 int main(int argc, char* argv[]){
     startTime = std::chrono::system_clock::now(); // Set the startTime variable to the current time
@@ -185,24 +191,31 @@ void PriorityScheduler(Router* router){
         // Based on priority
         // we need to decide which queue to take data from
         int selectedQueue;
-        if(!(router->input[0].empty()))
-            selectedQueue = 0;
-        else if(!(router->input[4].empty()))
-            selectedQueue = 4;
-        else if(!(router->input[1].empty()))
-            selectedQueue = 1;
-        else if(!(router->input[5].empty()))
-            selectedQueue = 5;
-        else if(!(router->input[2].empty()))
-            selectedQueue = 2;
-        else if(!(router->input[6].empty()))
-            selectedQueue = 6;
-        else if(!(router->input[3].empty()))
-            selectedQueue = 3;
-        else if(!(router->input[7].empty()))
-            selectedQueue = 7;
-        else 
-            continue;
+        if(typeOfSimulation == 0){
+            // Uniform Simulation (all queues have same priority traffic)
+            selectedQueue = rand()%8;
+        }else if(typeOfSimulation == 1 || typeOfSimulation == 2){
+            // Non Uniform Simulation (some queues have higher priority)
+            // high -- 0, 4, 5, 2    low -- 2, 6, 3, 7
+            if(!(router->input[0].empty()))
+                selectedQueue = 0;
+            else if(!(router->input[4].empty()))
+                selectedQueue = 4;
+            else if(!(router->input[1].empty()))
+                selectedQueue = 1;
+            else if(!(router->input[5].empty()))
+                selectedQueue = 5;
+            else if(!(router->input[2].empty()))
+                selectedQueue = 2;
+            else if(!(router->input[6].empty()))
+                selectedQueue = 6;
+            else if(!(router->input[3].empty()))
+                selectedQueue = 3;
+            else if(!(router->input[7].empty()))
+                selectedQueue = 7;
+            else 
+                continue;
+        }
 
         // Get packet from Router Current Input Queue
         Packet* pkt = router->removeFromInputQueue(selectedQueue);
@@ -219,10 +232,17 @@ void WeightedFairScheduler(Router* router){
     // WFQ Scheduler can be implemented probablistically using Lottery Scheduling
     // Setting tickets 
     int tickets[NUM_QUEUES] = {};
-    tickets[0] = tickets[4] = 100; // High Priority Bursty Traffic
-    tickets[1] = tickets[5] = 90; // High Priority Uniform Traffic
-    tickets[2] = tickets[6] = 50; // Low Priority Bursty Traffic
-    tickets[3] = tickets[7] = 40; // Low Priority Uniform Traffic
+    if(typeOfSimulation == 0){
+        tickets[0] = tickets[4] = 70;         
+        tickets[1] = tickets[5] = 70; 
+        tickets[2] = tickets[6] = 70;        
+        tickets[3] = tickets[7] = 70;     
+    }else if(typeOfSimulation == 1 || typeOfSimulation == 2){
+        tickets[0] = tickets[4] = 100; // High Priority Bursty Traffic
+        tickets[1] = tickets[5] = 90; // High Priority Uniform Traffic
+        tickets[2] = tickets[6] = 50; // Low Priority Bursty Traffic
+        tickets[3] = tickets[7] = 40; // Low Priority Uniform Traffic
+    }
     int totalTickets = 560;
     std::random_device rd;  // Non-deterministic random number generator
     std::mt19937 gen(rd()); // Seed the Mersenne Twister random number generator
@@ -345,20 +365,31 @@ void iSLIPScheduler(Router* router){
 
 // Link Layer Adding Function
 void sendToQueue(Router * router, int inputQueueNumber){
+    int priority[NUM_QUEUES];
+    int type[NUM_QUEUES]; // 0 - Bursty, 1 - Uniform
+    if(typeOfSimulation == 0){
+        for(int i = 0; i < NUM_QUEUES; i++){
+            priority[i] = 0; // All High Priority
+            type[i] = 1; // Uniform Traffic
+        }
+    }else if(typeOfSimulation == 1){
+        for(int i = 0; i < NUM_QUEUES; i++){
+            type[i] = 1; // All Uniform Traffic
+        }
+        priority[0] = priority[4] = priority[2] = priority[6] = 0; // High Priority Traffic
+        priority[1] = priority[5] = priority[3] = priority[7] = 1; // Low Priority Traffic
+    }else if(typeOfSimulation == 2){
+        type[0] = type[4] = type[2] = type[6] = 0; // Bursty Traffic
+        type[1] = type[5] = type[3] = type[7] = 1; // Uniform Traffic
+        priority[0] = priority[4] = priority[2] = priority[6] = 0; // High Priority Traffic
+        priority[1] = priority[5] = priority[3] = priority[7] = 1; // Low Priority Traffic
+    }
+
     while(!stop_threads.load()){
         // The sleep pattern and priority will depend on the queue number
-        if((inputQueueNumber == 0) || (inputQueueNumber == 4) || (inputQueueNumber == 2) || (inputQueueNumber == 6) ){ // Bursty Traffic
+        if(type[inputQueueNumber] == 0){ // Bursty Traffic
             // Sample Number of packets to be sent in burst
             int numPackets = BURST_LOW + rand()%(BURST_HIGH - BURST_LOW + 1);
-
-            int priority;
-            if((inputQueueNumber == 0) || (inputQueueNumber == 4)){
-                // High priority traffic
-                priority = 0; // (lower is higher)
-            }else if((inputQueueNumber == 2) || (inputQueueNumber == 6)){
-                // Low priority traffic
-                priority = 1; 
-            }
 
             // Allocate that many PIDs
             pidMutex.lock();
@@ -369,7 +400,7 @@ void sendToQueue(Router * router, int inputQueueNumber){
 
             // Create & Send numPackets packets
             for(int i = basePID; i <= maxPID; i++){
-                Packet* currPacket = new Packet(i, priority, getTime(), inputQueueNumber, rand()%8);
+                Packet* currPacket = new Packet(i, priority[inputQueueNumber], getTime(), inputQueueNumber, rand()%8);
                 allPackets.emplace(i, currPacket);
 
                 // Push to Router
@@ -381,21 +412,12 @@ void sendToQueue(Router * router, int inputQueueNumber){
             
             // Sleep for 2.5-4 seconds between bursts
             this_thread::sleep_for(chrono::milliseconds(2500 + ( std::rand() % ( 4000 - 2500 + 1 ) ))); 
-        }else if((inputQueueNumber == 1) || (inputQueueNumber == 5) || (inputQueueNumber == 3) || (inputQueueNumber == 7)){ // Uniform Traffic
+        }else if(type[inputQueueNumber] == 1){ // Uniform Traffic
             pidMutex.lock();
             int currPID = ++pid;
             pidMutex.unlock();
 
-            int priority;
-            if((inputQueueNumber == 1) || (inputQueueNumber == 5)){
-                // High priority traffic
-                priority = 0; // (lower is higher)
-            }else if((inputQueueNumber == 3) || (inputQueueNumber == 7)){
-                // Low priority traffic
-                priority = 1; 
-            }
-
-            Packet* currPacket = new Packet(currPID, priority, getTime(), inputQueueNumber, rand()%8);
+            Packet* currPacket = new Packet(currPID, priority[inputQueueNumber], getTime(), inputQueueNumber, rand()%8);
             allPackets.emplace(currPID, currPacket);
 
             router->addToInputQueue(inputQueueNumber, currPacket);
@@ -410,7 +432,7 @@ void sendToQueue(Router * router, int inputQueueNumber){
 void removeFromQueue(Router * router, int outputQueueNumber){
     while(!stop_threads.load()){
         router->removeFromOutputQueue(outputQueueNumber);
-        this_thread::sleep_for(chrono::milliseconds(75));
+        this_thread::sleep_for(chrono::milliseconds(50));
     }
 }
 
