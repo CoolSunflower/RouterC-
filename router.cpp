@@ -1,5 +1,3 @@
-// I am gonna try to do my implementation without chatgpt anyways, because learning and stuff ig
-
 /*
               +---------------------+
       I[0]  --|                     |
@@ -30,9 +28,9 @@
 
     P3: Priority and Weighted Fair Scheduling Algorithms DONE
 
-    P4: iSlip Algorithm
+    P4: iSlip Algorithm DONE
 
-    TODO:
+    TODOs:
         - Input Queues with locks: DONE
             - Send to input queue with sleep for each router input port DONE
         - Output Queues with locks: DONE
@@ -56,25 +54,9 @@
         - iSLIP Scheduler: DONE
             - major scheduler code DONE
             - add VOQ DONE
-
-        - ...
-        - do I really need a pid?
-
-
-        Adding Support for metrics:
-            1. Queue Throughput: The number of packets processed per unit time.
-                - there will be an overall throughput and a per queue throughput
-            2. Turnaround Time: The total time taken from when a packet or job enters the system (i.e., arrives
-            in the queue) until it is completely processed and exits the system.
-            3. Waiting Time: The total time a packet spends waiting in the queue before being serviced (i.e.,
-            before it begins processing).
-            4. Buffer Occupancy: Track the buffer occupancy for input and output queues.
-            5. Packet Drop Rate: The percentage of packets that are dropped due to queue overflow
 */
 
 // Includes
-// #include <cstddef>
-// #include <memory>
 #include <thread>
 #include <map>
 #include <chrono>
@@ -85,65 +67,81 @@
 #include <fstream>
 #include <vector>
 #include <random>
+#include <sys/stat.h> 
+#include <sys/wait.h> 
+#ifdef _WIN32
+    #include <direct.h> // For _mkdir() on Windows
+#else
+    #include <unistd.h> // For access() on Linux
+#endif
 #include "const.h"
 #include "defs.h"
 using namespace std;
 
 // Global Variables
-mutex inputMutex[NUM_QUEUES];     // Input queue mutexes <-- will be used when scheduler implemented 
-mutex inputMutexVOQ[NUM_QUEUES][NUM_QUEUES]; // used for VOQ required in iSLIP algorithm
-mutex outputMutex[NUM_QUEUES];    // Output queue mutexes <-- will be used when scheduler implemented
-std::atomic<bool> stop_threads(false);
-int pid = 0;             // packet id's
-mutex pidMutex;
-// vector<Packet> transmitted; // All packets successfully transmitted
-// Actually we want to maintain all packets!
-map<int, Packet*> allPackets;
-std::chrono::system_clock::time_point startTime;
-int scheduler_choice;
-mutex consoleMutex;
+mutex inputMutex[NUM_QUEUES];                   // Input queue mutexes <-- will be used when scheduler implemented 
+mutex inputMutexVOQ[NUM_QUEUES][NUM_QUEUES];    // used for VOQ required in iSLIP algorithm
+mutex outputMutex[NUM_QUEUES];                  // Output queue mutexes <-- will be used when scheduler implemented
+std::atomic<bool> stop_threads(false);       // For stopping all threads after simulationt time is finished
+int pid = 0;                                    // packet id's
+mutex pidMutex;                                 // mutex over PID
+map<int, Packet*> allPackets;                   // map to maintain all dynamically allocated packets
+std::chrono::system_clock::time_point startTime;// startTime is used by getTime() for populating time values in packets
+int scheduler_choice;                           // global scheduler choice used to take scheduler specific actions, if any
+mutex consoleMutex;                             // console mutex ig understandable
+string queueFileName;                           // File name to store buffer tracking data
 
 int main(int argc, char* argv[]){
-    startTime = std::chrono::system_clock::now();
+    startTime = std::chrono::system_clock::now(); // Set the startTime variable to the current time
 
-    // Instantiate Router
-    Router *router = new Router;
+    Router *router = new Router; // Instantiate Router
 
-    // Create & Detach appropriate Scheduler thread
-    cout << "Select Scheduler:\n1. Priority Scheduling\n2. Weighted Fair Queuing\n3. Round Robin\n4. iSLIP\n";
+    // Create & Detach appropriate Scheduler thread based on user input
+    cout << "Select Scheduler:\n1. Priority Scheduler\n2. Weighted Fair Scheduler\n3. Round Robin Scheduler\n4. iSLIP Scheduler\n";
     cin >> scheduler_choice;
+    string filename;
     if(scheduler_choice == 1){
         thread scheduler(PriorityScheduler, router);
         scheduler.detach();
+        filename = "./SimulationOutput/PriorityScheduler.txt";
+        queueFileName = "./SimulationOutput/PrioritySchedulerQueue.txt";
     }else if(scheduler_choice == 2){
         thread scheduler(WeightedFairScheduler, router);
         scheduler.detach();
+        filename = "./SimulationOutput/WeightedFairScheduler.txt";
+        queueFileName = "./SimulationOutput/WeightedFairSchedulerQueue.txt";
     }else if(scheduler_choice == 3){
         thread scheduler(RoundRobinScheduler, router);
         scheduler.detach();
+        filename = "./SimulationOutput/RoundRobinScheduler.txt";
+        queueFileName = "./SimulationOutput/RoundRobinSchedulerQueue.txt";
     }else if(scheduler_choice == 4){
         thread scheduler(iSLIPScheduler, router);
         scheduler.detach();
+        filename = "./SimulationOutput/iSLIPScheduler.txt";
+        queueFileName = "./SimulationOutput/iSLIPSchedulerQueue.txt";
     }else{
         cout << "Invalid Choice. Exiting...\n";
         return 1;
     }
 
-    freopen("output.txt", "w", stdout);
+    // Change output file to store packet data
+    createFoler("SimulationOutput/");
+    createFoler("SimulationReports/");
+    freopen(filename.c_str(), "w", stdout);
 
     // Create & Detach Thread for Tracking Size of each queue
-    // needed to calculate buffer occupancy
     thread SizeThread(trackSize, router);
     SizeThread.detach();
 
-    // Start detached thread for inputting to queue
+    // START Link Layer Functions:
+    // Start detached threads for inputting to queues
     vector<thread> InputDataSenderThreads;
     for(int i = 0; i < NUM_QUEUES; i++)
         InputDataSenderThreads.push_back(thread(sendToQueue, router, i));
     for(int i = 0; i < NUM_QUEUES; i++)
         InputDataSenderThreads[i].detach();
-
-    // Start detached thread for removing from queue
+    // Start detached threads for removing data from output queues
     vector<thread> OutputQueueRemover;
     for(int i = 0; i < NUM_QUEUES; i++)
         OutputQueueRemover.push_back(thread(removeFromQueue, router, i));
@@ -155,10 +153,27 @@ int main(int argc, char* argv[]){
     stop_threads.store(true);
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
-    freopen("/dev/tty", "w", stdout);  // For Linux/Mac
-    cout << "DONE SIMULATION!\n";
+    #ifdef _WIN32
+        freopen("CON", "w", stdout);  // For Windows
+    #else
+        freopen("/dev/tty", "w", stdout); // For Linux/Mac
+    #endif
 
+    cout << "DONE SIMULATION!\n";
     std::this_thread::sleep_for(std::chrono::seconds(2));
+
+    // Get Metrics
+    int pid = fork();
+    if(pid == 0){
+        // Child process: execute ./metrics
+        execl("./metrics", "./metrics", to_string(scheduler_choice).c_str(), (char *) nullptr);
+        std::cerr << "Error executing ./metrics" << std::endl;
+        return 1;
+    }else{
+        // Parent process: wait for the child process to finish
+        int status;
+        waitpid(pid, &status, 0);  // Wait for the child
+    }
 
     return 0;
 }
@@ -319,6 +334,8 @@ void iSLIPScheduler(Router* router){
                     inputPointers[i] = (inputPointers[i] + 1) % NUM_QUEUES;
                     outputPointers[selectedOutput] = (outputPointers[selectedOutput] + 1) % NUM_QUEUES;
                 }
+
+                requests[i][selectedOutput] = false;
             }
         }
 
@@ -326,6 +343,7 @@ void iSLIPScheduler(Router* router){
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }}
 
+// Link Layer Adding Function
 void sendToQueue(Router * router, int inputQueueNumber){
     while(!stop_threads.load()){
         // The sleep pattern and priority will depend on the queue number
@@ -388,6 +406,7 @@ void sendToQueue(Router * router, int inputQueueNumber){
     }
 }
 
+// Link Layer Removing Function
 void removeFromQueue(Router * router, int outputQueueNumber){
     while(!stop_threads.load()){
         router->removeFromOutputQueue(outputQueueNumber);
@@ -395,6 +414,7 @@ void removeFromQueue(Router * router, int outputQueueNumber){
     }
 }
 
+// Buffer push functions
 int Buffer::push(Packet* pkt){
     if(this->full()){ return 0;} // Signified packet dropping
     this->bufferQueue.push(pkt);
@@ -402,15 +422,18 @@ int Buffer::push(Packet* pkt){
     return pkt->id;
 }
 
+// Buffer pop function
 void Buffer::pop(){
     this->bufferQueue.pop();
     this->size -= 1;
 }
 
+// Buffer front function
 Packet* Buffer::front(){
     return this->bufferQueue.front();
 }
 
+// Virtual Output Queueing (VOQ) Buffer push function
 int VOQBuffer::push(Packet* pkt, int outputIndex){
     if(this->full()){ return 0; } // Packet dropping for this input port
     this->bufferQueue[outputIndex].push(pkt);
@@ -420,6 +443,7 @@ int VOQBuffer::push(Packet* pkt, int outputIndex){
     return pkt->id;
 }
 
+// Virtual Output Queueing (VOQ) Buffer pop function
 void VOQBuffer::pop(int outputIndex){
     this->bufferQueue[outputIndex].pop();
     this->sizeMutex.lock();
@@ -427,10 +451,12 @@ void VOQBuffer::pop(int outputIndex){
     this->sizeMutex.unlock();
 }
 
+// Virtual Output Queueing (VOQ) Buffer front function
 Packet* VOQBuffer::front(int outputIndex){
     return this->bufferQueue[outputIndex].front();
 }
 
+// Router Function to add to input queue (used by link layer adder)
 int Router::addToInputQueue(int inputQueueNumber, Packet* pkt){
     if(scheduler_choice == 4){
         // for iSLIP algorithm we need to use VOQ
@@ -460,6 +486,7 @@ int Router::addToInputQueue(int inputQueueNumber, Packet* pkt){
     return ret;
 }
 
+// Router function to send to output queue (used by scheduler to send packet to correct output queue)
 int Router::sendToOutputQueue(int outputQueueNumber, Packet* pkt){
     outputMutex[outputQueueNumber].lock();
     int ret = this->output[outputQueueNumber].push(pkt);
@@ -468,6 +495,7 @@ int Router::sendToOutputQueue(int outputQueueNumber, Packet* pkt){
     return ret;
 }
 
+// Router function to remove from output queue (used by link layer remover function to cleanup output queues)
 void Router::removeFromOutputQueue(int outputQueueNumber){
     while(this->output[outputQueueNumber].empty());
 
@@ -491,6 +519,7 @@ void Router::removeFromOutputQueue(int outputQueueNumber){
     outputMutex[outputQueueNumber].unlock();
 }
 
+// Router function to remove from input queue (used by scheduler to remove from any selected input queue for processing)
 Packet* Router::removeFromInputQueue(int inputQueueNumber){
     while(this->input[inputQueueNumber].empty());
 
@@ -505,6 +534,7 @@ Packet* Router::removeFromInputQueue(int inputQueueNumber){
     return pkt;
 }
 
+// Router function to reomve from input queue, modified for iSLIP since VOQ is used
 Packet* Router::removeFromInputQueueVOQ(int inputQueueNumber, int outputIndex){
     while(this->VOQInput[inputQueueNumber].empty(outputIndex));
 
@@ -519,15 +549,17 @@ Packet* Router::removeFromInputQueueVOQ(int inputQueueNumber, int outputIndex){
     return pkt;
 }
 
+// Utility function to define output of Packet Class Objects
 ostream &operator<<(ostream &os, Packet const &pkt) { 
     return os << pkt.id << " " << pkt.priority << " " << pkt.inputPort << " " << pkt.outputPort << " " << pkt.arrivalTime << " " << pkt.startProcessingTime << " " << pkt.sentTime << " \n";
 }
 
+// trackSize runs on a seperate thread and tracks input and output buffer Occupancy
 void trackSize(Router* router){
     std::vector<std::vector<int>> inputSizes;  
     std::vector<std::vector<int>> outputSizes; 
 
-    std::ofstream outFile("queue_sizes.txt"); // Output file stream
+    std::ofstream outFile(queueFileName); // Output file stream
     if (!outFile.is_open()) {
         std::cerr << "Error opening file for writing." << std::endl;
         return;
@@ -571,12 +603,23 @@ void trackSize(Router* router){
     outFile.close();
 }
 
+// This function returns the relative time with respect to the start time
 int getTime(){
-    // std::chrono::system_clock::time_point currentTime = std::chrono::system_clock::now();
-    // auto timeSinceEpoch = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime.time_since_epoch()).count();
-    // return timeSinceEpoch - ;
     std::chrono::system_clock::time_point endTime = std::chrono::system_clock::now();
     auto elapsedTimeMillis = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
     return elapsedTimeMillis;
 }
 
+// utility function to create the SimulationResults folder if it does not exist
+void createFoler(std::string folderPath){
+    struct stat info;
+    
+    // Check if the folder exists
+    if (stat(folderPath.c_str(), &info) != 0 || !(info.st_mode & S_IFDIR)) {
+    #ifdef _WIN32
+            _mkdir(folderPath.c_str()) == 0;
+    #else
+            mkdir(folderPath.c_str(), 0777);
+    #endif
+    }
+}

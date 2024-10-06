@@ -24,4 +24,3 @@ run:
 		echo "Randomised Fault, Rerunning..."; \
 	done
 	@echo "Succesful Simulation.";\
-	./$(METRICS)

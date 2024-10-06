@@ -19,7 +19,6 @@ public:
     float sentTime = 0;        // when finally sent on output link
     // startProcessingTime is 0 for packets dropped on input queue
     // sentTime is 0 for packets dropped on output queue
-    // wait whats the sense of output queue packet dropping?
     int inputPort;
     int outputPort;      // Forwarding Table, what's that?
 
@@ -87,10 +86,9 @@ public:
 
 // Utility Functions
 void trackSize(Router*);
-void readAllPackets(std::vector<Packet>*);
 std::ostream &operator<<(std::ostream &os, Packet const &pkt);
-void printTransmitted(std::vector<Packet>*);
 int getTime();
+void createFoler(std::string);
 
 // The below 2 functions simulate the link layer
 void sendToQueue(Router*, int);

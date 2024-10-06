@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -6,17 +7,46 @@
 using namespace std;
 
 void calculateMetrics();
+string filename;
+string reportfilename;
 
-int main(){
+int main(int argc, char* argv[]){
+    if(argc != 2){
+        return 1;
+    }
+    int scheduler_choice = atoi(argv[1]);
+    if(scheduler_choice == 1){
+        filename = "./SimulationOutput/PriorityScheduler.txt";
+        reportfilename = "./SimulationReports/PriorityScheduler.txt";
+    }else if(scheduler_choice == 2){
+        filename = "./SimulationOutput/WeightedFairScheduler.txt";
+        reportfilename = "./SimulationReports/WeightedFairScheduler.txt";
+    }else if(scheduler_choice == 3){
+        filename = "./SimulationOutput/RoundRobinScheduler.txt";
+        reportfilename = "./SimulationReports/RoundRobinScheduler.txt";
+    }else if(scheduler_choice == 4){
+        filename = "./SimulationOutput/iSLIPScheduler.txt";
+        reportfilename = "./SimulationReports/iSLIPScheduler.txt";
+    }else{
+        cout << "Invalid Choice. Exiting...\n";
+        return 1;
+    }
+
     calculateMetrics();
     return 0;
 }
 
 void calculateMetrics(){
-    std::ifstream inputFile("output.txt");
+    std::ifstream inputFile(filename);
 
     // Check if the file opened successfully
     if (!inputFile.is_open()) {
+        std::cerr << "Error opening file!" << std::endl;
+        exit(1);
+    }
+
+    std::ofstream logfile(reportfilename, std::ios::app);  // Open file for appending logs
+    if (!logfile) {
         std::cerr << "Error opening file!" << std::endl;
         exit(1);
     }
@@ -106,7 +136,7 @@ void calculateMetrics(){
 
     // Buffer Occupancy
     cout << "\n== Buffer Occupancy ==\n";
-    cout << "For continous input and output buffer occupancy data, see queue_sizes.txt\n";
+    cout << "For continous input and output buffer occupancy data, see corresponding file in Simulation Output\n";
 
 
     // Packet Drop Rate
@@ -115,5 +145,49 @@ void calculateMetrics(){
     cout << "Percentage of Packets Dropped for each Input Queue: \n";
     for(int i = 0; i < NUM_QUEUES; i++){
         cout << "Queue " << i << ": " << (queuewiseTotalDroppedPackets[i]/(float)queuewiseTotalPackets[i])*100 << "%\n";
+    } 
+
+
+    // Saving information to the logfile
+    logfile << "\n----- Simulation Results -----\n";
+    logfile << "== General Statistics ==\n";
+    logfile << "Total Packets Generated: " << totalPackets << "\n";
+    logfile << "Total Packets Successfully Transmitted: " << totalSuccessfullyTransmitted << "\n";
+    logfile << "Total Packets Dropped: " << totalDropped << "\n";
+
+    // Queue Throughput
+    logfile << "\n== Queue Throughput ==\n";
+    logfile << "Combined Router Throughput: " << totalSuccessfullyTransmitted/(float)SIMULATION_TIME << " Packets/Second \n";
+    logfile << "Queue Throughput for each Input Queue: \n";
+    for(int i = 0; i < NUM_QUEUES; i++){
+        logfile << "Queue " << i << ": " << queuewiseTotalSuccessfulPackets[i]/(float)SIMULATION_TIME << " Packets/Second \n";
+    } 
+
+    // Turnaround Time
+    logfile << "\n== Turnaround Time ==\n";
+    logfile << "Average Turnaround Time: " << totalTurnaroundTime/totalSuccessfullyTransmitted << " ms \n";
+    logfile << "Turnaround Time for Each Input Queue: \n";
+    for(int i = 0; i < NUM_QUEUES; i++){
+        logfile << "Queue " << i << ": " << queuewiseTotalTurnaroundTime[i]/queuewiseTotalSuccessfulPackets[i] << " ms \n";
+    }
+
+    // Waiting Time
+    logfile << "\n== Waiting Time ==\n";
+    logfile << "Average Waiting Time: " << totalWaitingTime/totalSuccessfullyTransmitted << " ms \n";
+    logfile << "Waiting Time for Each Input Queue: \n";
+    for(int i = 0; i < NUM_QUEUES; i++){
+        logfile << "Queue " << i << ": " << queuewiseTotalWaitingTime[i]/queuewiseTotalSuccessfulPackets[i] << " ms \n";
+    }
+
+    // Buffer Occupancy
+    logfile << "\n== Buffer Occupancy ==\n";
+    logfile << "For continous input and output buffer occupancy data, see corresponding file in Simulation Output\n";
+
+    // Packet Drop Rate
+    logfile << "\n== Packet Drop Rates ==\n";
+    logfile << "Percentage of Total Packets Dropped: " << (totalDropped/(float)totalPackets)*100 << "%\n";
+    logfile << "Percentage of Packets Dropped for each Input Queue: \n";
+    for(int i = 0; i < NUM_QUEUES; i++){
+        logfile << "Queue " << i << ": " << (queuewiseTotalDroppedPackets[i]/(float)queuewiseTotalPackets[i])*100 << "%\n";
     } 
 }
