@@ -1,4 +1,4 @@
-# Router Scheduling Algorithms - Simulation & Comparison
+# FairQ: Router Scheduling Algorithms - Simulation & Comparison
 
     Adarsh Gupta (220101003) 
     Tanvi Doshi (220101102)
@@ -111,5 +111,6 @@ Detailed results and graphs are available in the /Results/ folder.
 ## Conclusion
 
 The iSLIP algorithm provided the best overall performance, with low packet delay and high throughput, making it the most suitable for high-throughput router switch fabrics. Detailed conclusions are drawn in the final report, available in the repository.
+
 
 For more details, visit the full project repository [here](https://github.com/CoolSunflower/RouterC-/), or refer to the complete report: 'Router Scheduling Algorithms: Simulation & Comparision in C++'.
